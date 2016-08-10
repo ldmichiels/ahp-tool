@@ -25,13 +25,17 @@
 		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.css">
 		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
 		-->
-		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/r-2.1.0/se-1.2.0/datatables.min.css"/>
-		<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/r-2.1.0/se-1.2.0/datatables.min.js"></script>
 		<style type="text/css" media="screen">
 			.show-grid {
 				margin-bottom: 15px;
 			}
+
+			.highlight {
+				background-color: #5CB85C !important; 
+			}
 		</style>
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/r-2.1.0/se-1.2.0/datatables.min.css"/>
+		<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/r-2.1.0/se-1.2.0/datatables.min.js"></script>
 	</head>
 	<body>
 		<div class="page-header">
@@ -66,14 +70,19 @@
  		
  			<!-- Tab panes -->
  			<div class="tab-content">
- 				<div class="row">
-					<div id="consistencyOk" class="alert alert-success">
-						<strong>Succes!</strong> The matrix is consistent.
+	 			<div class="container-fluid">
+	 				<!-- Deberian crearse dinamicamente (con nombre de tabla ponele) -->
+	 				<div class="row">
+						<div id="consistencyOk" class="alert alert-success">
+							<strong>Succes!</strong> The matrix is consistent.
+						</div>
 					</div>
-				</div>
-				<div id="consistencyFail" class="alert alert-danger">
-					<strong>Fail!</strong> The matrix is not consistent.
-				</div>
+					<div class="row">
+						<div id="consistencyFail" class="alert alert-danger">
+							<strong>Fail!</strong> The matrix is not consistent.
+						</div>
+					</div>
+	 			</div>
  				<!-- First tab -->
  				<div role="tabpanel" class="tab-pane active" id="home-tab">
  					<div class="jumbotron">
@@ -94,7 +103,18 @@
  				</div>
  				<!-- Second tab -->
  				<div role="tabpanel" class="tab-pane" id="getstart-tab">
- 					<p>Description of the process here...</p>
+ 					<div class="container-fluid">
+ 						<div class="row">
+ 							<p>Description of the process here...</p>
+ 							<ol>
+ 								<li>Load alternatives and lock.</li>
+ 								<li>Load criteria and lock.</li>
+ 								<li>Load judgment for criteria, subcriteria and alternatives.</li>
+ 								<li>Go to goal tab and click to calculate.</li>
+ 								<li>Prioritized alternatives will be listed in a table and the best option will be highlighted in green.</li>
+ 							</ol>
+ 						</div>
+ 					</div>
  				</div>
  				<!-- Third tab -->
  				<div role="tabpanel" class="tab-pane" id="goal-tab">
@@ -106,118 +126,132 @@
  						</div>
  					</div>
  					<button type="button" class="btn btn-lg btn-success" id="calculate">Calculate</button>
- 					<div class="row" id="#result">
- 						<table id="resultTable" class="table table-hover">
- 							<caption>Vector resultado para cada alternativa</caption>
- 							<thead>
- 								<tr>
- 									<th>Result Vector</th>
- 								</tr>
- 							</thead>
- 							<tbody>
- 							</tbody>
- 						</table>
- 					</div>
+	 				<div class="container-fluid">
+	 					<div class="row" id="#result">
+	 						<table id="resultTable" class="table table-hover">
+	 						</table>
+	 					</div>
+	 				</div>
  				</div>
  				<!-- Fourth tab -->
  				<div role="tabpanel" class="tab-pane" id="criteria-tab">
  					<div class="panel panel-default">
-						<!-- Default panel contents -->
-						<div class="panel-heading">Load Criteria</div>
-						<div class="panel-body">
-						<p>You should load your criteria in the following table</p>
-						<div class="btn-group" role="group" aria-label="...">
-							<!-- Trigger the modal with a button -->
-  							<button type="button" id="modalCriteriaBtn" class="btn btn-default" data-toggle="modal" data-target="#myModalCriteria">Add</button>
-							<button type="button" id="removeCriteria" class="btn btn-default">Remove</button>
-							<button type="button" id="clearCriteria" class="btn btn-default">Clear All</button>
+						<div class="container-fluid">
+							<div class="row">
+								<!-- Default panel contents -->
+								<div class="panel-heading">Load Criteria</div>
+								<div class="panel-body">
+									<p>You should load your criteria in the following table</p>
+									<div class="btn-group" role="group" aria-label="...">
+										<!-- Trigger the modal with a button -->
+			  							<button type="button" id="modalCriteriaBtn" class="btn btn-default" data-toggle="modal" data-target="#myModalCriteria">Add</button>
+										<button type="button" id="removeCriteria" class="btn btn-default">Remove</button>
+										<button type="button" id="clearCriteria" class="btn btn-default">Clear All</button>
+									</div>
+									<button type="button" id="subCriteria" data-toggle="modal" href='#subcriteriaModal' class="btn btn-default">Subcriteria</button>
+									<button type="button" id="lockCriteriaTable" class="btn btn-default">Lock</button>
+								</div>
+							</div>
+							<div class="row">
+								<!-- Table -->
+								<table id="criteriaTable" class="table table-hover">
+			 						<thead>
+			 							<tr>
+			 								<th>Id</th>
+			 								<th>Name</th>
+			 								<th>Description</th>
+			 							</tr>
+			 						</thead>
+			 						<tbody>
+			 						</tbody>
+			 					</table>
+							</div>
 						</div>
-						<button type="button" id="subCriteria" data-toggle="modal" href='#subcriteriaModal' class="btn btn-default">Subcriteria</button>
-						<button type="button" id="lockCriteriaTable" class="btn btn-default">Lock</button>
-						</div>
-						<!-- Table -->
-						<table id="criteriaTable" class="table table-hover">
-	 						<thead>
-	 							<tr>
-	 								<th>Id</th>
-	 								<th>Name</th>
-	 								<th>Description</th>
-	 							</tr>
-	 						</thead>
-	 						<tbody>
-	 						</tbody>
-	 					</table>
 	 				</div>
  				</div>
  				<!-- Fifth tab -->
  				<div role="tabpanel" class="tab-pane" id="alternatives-tab">
  					<div class="panel panel-default">
-						<!-- Default panel contents -->
-						<div class="panel-heading">Load Alternatives</div>
-						<div class="panel-body">
-						<p>You should load your alternatives in the following table.</p>
-						<div class="btn-group" role="group" aria-label="...">
-							<!-- Trigger the modal with a button -->
-  							<button type="button" id="modalAlternativesBtn" class="btn btn-default" data-toggle="modal" data-target="#myModalAlternatives">Add</button>
-							<button type="button" id="removeAlternative" class="btn btn-default">Remove</button>
-							<button type="button" id="clearAlternatives" class="btn btn-default">Clear All</button>
+						<div class="container-fluid">
+							<div class="row">
+								<!-- Default panel contents -->
+								<div class="panel-heading">Load Alternatives</div>
+								<div class="panel-body">
+								<p>You should load your alternatives in the following table.</p>
+								<div class="btn-group" role="group" aria-label="...">
+									<!-- Trigger the modal with a button -->
+									<button type="button" id="modalAlternativesBtn" class="btn btn-default" data-toggle="modal" data-target="#myModalAlternatives">Add</button>
+									<button type="button" id="removeAlternative" class="btn btn-default">Remove</button>
+									<button type="button" id="clearAlternatives" class="btn btn-default">Clear All</button>
+								</div>
+								<button type="button" id="lockAlternativesTable" class="btn btn-default">Lock</button>
+								</div>
+							</div>
+							<div class="row">
+								<!-- Table -->
+								<table id="alternativesTable" class="table table-hover">
+									<thead>
+										<tr>
+											<th>Id</th>
+											<th>Name</th>
+											<th>Description</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table> 							
+							</div>
 						</div>
-						<button type="button" id="lockAlternativesTable" class="btn btn-default">Lock</button>
-						</div>
-						<!-- Table -->
-						<table id="alternativesTable" class="table table-hover">
-	 						<thead>
-	 							<tr>
-	 								<th>Id</th>
-	 								<th>Name</th>
-	 								<th>Description</th>
-	 							</tr>
-	 						</thead>
-	 						<tbody>
-	 						</tbody>
-	 					</table>
-	 				</div>
- 				</div>
+					</div>
+				</div>
  				<!-- Sixth tab -->
  				<div role="tabpanel" class="tab-pane" id="process-tab">
-	 				<div class="panel panel-default">
-	 					<div class="panel-heading">
-	 						<h3 class="panel-title">Criteria Priorities</h3>
+	 				<div class="container-fluid">
+	 					<div class="row">
+	 						<div class="panel panel-default">
+			 					<div class="panel-heading">
+			 						<h3 class="panel-title">Criteria Priorities</h3>
+			 					</div>
+			 					<div class="panel-body">
+			 						<p>You need to lock the tables of criteria and then upload your judgments.</p>
+			 					</div>
+			 				</div>
 	 					</div>
-	 					<div class="panel-body">
-	 						<p>You need to lock the tables of criteria and then upload your judgments.</p>
-	 					</div>
+		 				<div class="row">
+		 					<div class="panel panel-default">
+		 						<div class="panel-heading">
+		 							<h3 class="panel-title">Criteria Pairwise Comparisons Matrix</h3>
+		 						</div>
+		 						<div class="panel-body">
+		 						</div>
+		 					</div>
+		 				</div>
 	 				</div>
-	 				<div class="row">
-	 					<div class="panel panel-default">
-	 						<div class="panel-heading">
-	 							<h3 class="panel-title">Criteria Pairwise Comparisons Matrix</h3>
-	 						</div>
-	 						<div class="panel-body">
-	 						</div>
-	 					</div>
-	 				</div>	 					
  				</div>
  				<!-- Seventh tab -->
  				<div role="tabpanel" class="tab-pane" id="altPriorities-tab">
-	 				<div class="panel panel-default">
-	 					<div class="panel-heading">
-	 						<h3 class="panel-title">Alternatives Priorities</h3>
-	 					</div>
-	 					<div class="panel-body">
-	 						<p>You need to lock the tables of criteria and alternatives and then upload your judgments.</p>
-	 						<p>You must find local priorities betwen alternatives.</p>
-	 					</div>
-	 				</div>
-	 				<div class="row">
-	 					<div class="panel panel-default">
-	 						<div class="panel-heading">
-	 							<h3 class="panel-title">Criteria Pairwise Comparisons Matrix</h3>
-	 						</div>
-	 						<div class="panel-body">
-	 						</div>
-	 					</div>
-	 				</div>	 					
+ 					<div class="container-fluid">
+ 						<div class="row">
+ 							<div class="panel panel-default">
+			 					<div class="panel-heading">
+			 						<h3 class="panel-title">Alternatives Priorities</h3>
+			 					</div>
+			 					<div class="panel-body">
+			 						<p>You need to lock the tables of criteria and alternatives and then upload your judgments.</p>
+			 						<p>You must find local priorities betwen alternatives.</p>
+			 					</div>
+		 					</div>
+ 						</div>
+		 				<div class="row">
+		 					<div class="panel panel-default">
+		 						<div class="panel-heading">
+		 							<h3 class="panel-title">Alternatives Pairwise Comparisons Matrix</h3>
+		 						</div>
+		 						<div class="panel-body">
+		 						</div>
+		 					</div>
+		 				</div>
+ 					</div>
  				</div>
  			</div>
  		</div>
@@ -257,17 +291,19 @@
  						<h4 class="modal-title">New Criteria</h4>
  					</div>
  					<div class="modal-body">
-	 					<div class="row show-grid">
-	 						<label for="criteriaName" class="col-sm-2 control-label">Name:</label>
-	 						<div class="col-sm-10">
-	 							<input type="text" name="criteriaName" id="criteriaName" class="form-control" value="Criteria Name" required="required" pattern="" title="Criteria Name">
-	 						</div>
-	 					</div>
- 						<div class="row show-grid">
-	 						<label for="criteriaDescription" class="col-sm-2 control-label">Description:</label>
-	 						<div class="col-sm-10">
-	 							<input type="text" name="criteriaDescription" id="criteriaDescription" class="form-control" value="Criteria Description" required="required" pattern="" title="Criteria Description">
-	 						</div>
+	 					<div class="container-fluid">
+		 					<div class="row show-grid">
+		 						<label for="criteriaName" class="col-sm-2 control-label">Name:</label>
+		 						<div class="col-sm-10">
+		 							<input type="text" name="criteriaName" id="criteriaName" class="form-control" value="Criteria Name" required="required" pattern="" title="Criteria Name">
+		 						</div>
+		 					</div>
+	 						<div class="row show-grid">
+		 						<label for="criteriaDescription" class="col-sm-2 control-label">Description:</label>
+		 						<div class="col-sm-10">
+		 							<input type="text" name="criteriaDescription" id="criteriaDescription" class="form-control" value="Criteria Description" required="required" pattern="" title="Criteria Description">
+		 						</div>
+		 					</div>
 	 					</div>
 	 				</div>
  					<div class="modal-footer">
@@ -288,17 +324,19 @@
  						<h4 class="modal-title">New Alternative</h4>
  					</div>
  					<div class="modal-body">
-	 					<div class="row show-grid">
-	 						<label for="AlternativeName" class="col-sm-2 control-label">Name:</label>
-	 						<div class="col-sm-10">
-	 							<input type="text" name="alternativeName" id="alternativeName" class="form-control" value="Alternative Name" required="required" pattern="" title="Alternative Name">
-	 						</div>
-	 					</div>
- 						<div class="row show-grid">
-	 						<label for="alternativeDescription" class="col-sm-2 control-label">Description:</label>
-	 						<div class="col-sm-10">
-	 							<input type="text" name="alternativeDescription" id="alternativeDescription" class="form-control" value="Alternative Description" required="required" pattern="" title="Alternative Description">
-	 						</div>
+	 					<div class="container-fluid">
+	 						<div class="row show-grid">
+		 						<label for="AlternativeName" class="col-sm-2 control-label">Name:</label>
+		 						<div class="col-sm-10">
+		 							<input type="text" name="alternativeName" id="alternativeName" class="form-control" value="Alternative Name" required="required" pattern="" title="Alternative Name">
+		 						</div>
+		 					</div>
+	 						<div class="row show-grid">
+		 						<label for="alternativeDescription" class="col-sm-2 control-label">Description:</label>
+		 						<div class="col-sm-10">
+		 							<input type="text" name="alternativeDescription" id="alternativeDescription" class="form-control" value="Alternative Description" required="required" pattern="" title="Alternative Description">
+		 						</div>
+		 					</div>
 	 					</div>
  					</div>
  					<div class="modal-footer">
@@ -318,70 +356,72 @@
  						<h4 class="modal-title">Judgment</h4>
  					</div>
  					<div class="modal-body">
- 						<div class="row show-grid">
-	 						<table class="table table-condensed table-hover">
-	 							<thead>
-	 								<tr>
-	 									<th>Scale</th>
-	 									<th>Numerical Rating</th>
-	 									<th>Reciprocal</th>
-	 								</tr>
-	 							</thead>
-	 							<tbody>
-	 								<tr>
-	 									<td>Extremly importance</td>
-	 									<td>9</td>
-	 									<td>1/9</td>
-	 								</tr>
-	 								<tr>
-	 									<td>Very to extremly strongly importance</td>
-	 									<td>8</td>
-	 									<td>1/8</td>
-	 								</tr>
-	 								<tr>
-	 									<td>Very strongly importance</td>
-	 									<td>7</td>
-	 									<td>1/7</td>
-	 								</tr>
-	 								<tr>
-	 									<td>Strongly to very strongly importance</td>
-	 									<td>6</td>
-	 									<td>1/6</td>
-	 								</tr>
-	 								<tr>
-	 									<td>Strongly importance</td>
-	 									<td>5</td>
-	 									<td>1/5</td>
-	 								</tr>
-	 								<tr>
-	 									<td>Moderately to strngly importance</td>
-	 									<td>4</td>
-	 									<td>1/4</td>
-	 								</tr>
-	 								<tr>
-	 									<td>Moderately importance</td>
-	 									<td>3</td>
-	 									<td>1/3</td>
-	 								</tr>
-	 								<tr>
-	 									<td>Equally to moderately importance</td>
-	 									<td>2</td>
-	 									<td>1/2</td>
-	 								</tr>
-	 								<tr>
-	 									<td>Equally importance</td>
-	 									<td>1</td>
-	 									<td>1</td>
-	 								</tr>
-	 							</tbody>
-	 						</table>
-	 					</div>
- 						<div class="row show-grid">
-	 						<label for="judgment" class="col-sm-2 control-label">Judgment:</label>
-	 						<div class="col-sm-10">
-	 							<input type="number" name="judgment" id="judgment" class="form-control" required="required" min="0" max="9" title="Judgment">
-	 						</div>
-	 					</div>
+ 						<div class="container-fluid">
+	 						<div class="row show-grid">
+		 						<table class="table table-condensed table-hover">
+		 							<thead>
+		 								<tr>
+		 									<th>Scale</th>
+		 									<th>Numerical Rating</th>
+		 									<th>Reciprocal</th>
+		 								</tr>
+		 							</thead>
+		 							<tbody>
+		 								<tr>
+		 									<td>Extremly importance</td>
+		 									<td>9</td>
+		 									<td>1/9</td>
+		 								</tr>
+		 								<tr>
+		 									<td>Very to extremly strongly importance</td>
+		 									<td>8</td>
+		 									<td>1/8</td>
+		 								</tr>
+		 								<tr>
+		 									<td>Very strongly importance</td>
+		 									<td>7</td>
+		 									<td>1/7</td>
+		 								</tr>
+		 								<tr>
+		 									<td>Strongly to very strongly importance</td>
+		 									<td>6</td>
+		 									<td>1/6</td>
+		 								</tr>
+		 								<tr>
+		 									<td>Strongly importance</td>
+		 									<td>5</td>
+		 									<td>1/5</td>
+		 								</tr>
+		 								<tr>
+		 									<td>Moderately to strngly importance</td>
+		 									<td>4</td>
+		 									<td>1/4</td>
+		 								</tr>
+		 								<tr>
+		 									<td>Moderately importance</td>
+		 									<td>3</td>
+		 									<td>1/3</td>
+		 								</tr>
+		 								<tr>
+		 									<td>Equally to moderately importance</td>
+		 									<td>2</td>
+		 									<td>1/2</td>
+		 								</tr>
+		 								<tr>
+		 									<td>Equally importance</td>
+		 									<td>1</td>
+		 									<td>1</td>
+		 								</tr>
+		 							</tbody>
+		 						</table>
+		 					</div>
+	 						<div class="row show-grid">
+		 						<label for="judgment" class="col-sm-2 control-label">Judgment:</label>
+		 						<div class="col-sm-10">
+		 							<input type="number" name="judgment" id="judgment" class="form-control" required="required" min="0" max="9" title="Judgment">
+		 						</div>
+		 					</div>
+ 						</div>
  					</div>
  					<div class="modal-footer">
  						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -563,7 +603,6 @@
 						2. Armar matriz
 						3. Multiplicar Matriz x vector de criterios
 					*/
-
 					for (idx in info) {
 						var t = $( '#' + info[idx].tableName ).DataTable();
 						var v = $( '#' + info[idx].vectorName ).DataTable().data().toArray();
@@ -573,7 +612,7 @@
 						if ( !done(t) ) {
 							alert("Faltan cargar criterios!!");
 							return false;
-						} else { console.log("It's Ok!");}
+						} else { console.log("It's Ok!"); }
 
 						switch ( info[idx].type ) {
 							case TYPE_ONE:
@@ -597,24 +636,49 @@
 						}
 					}
 
-console.log(mtxSub);
-console.log(subcV);
 					for (idx in mtxSub) {
 						vectors[ idx ] = multiplyMatrix( transpose( mtxSub[idx] ), subcV[idx] );
 					}
-console.log(vectors);
+
 					for (idx in vectors) {
 						mtx.push( vectors[idx] );
 					}
 
 					mtx = transpose( mtx );
-console.log(mtx);
-console.log(critV);
-					pVector = multiplyMatrix( mtx, critV);
-					console.log("pVector->");
-					console.log(pVector);
-					console.log("<-pVector");
-					create("resultTable",[{ "title": "Priority Vector" }], pVector);
+
+					pVector = multiplyMatrix( mtx, critV );
+
+					//create("resultTable",[{ "title": "Priority Vector" }], pVector);
+
+					var max = 0;
+					var indexes = [];
+					var dataset = [];
+
+					for (idx in pVector) {
+						var row = [];
+						row.push( alternatives[ idx ].name );
+						row.push( alternatives[ idx ].description );
+						row.push( (pVector[ idx ][0] * 100).toFixed(2) );
+						dataset.push( row );
+
+						if (pVector[ idx ][0] >= max) {
+							max = pVector[ idx ][0];
+							indexes.push( Number(idx) );
+						}
+					}
+					console.log(indexes);
+					var columns = [
+							{ "title": "Alternative" },
+							{ "title": "Alternative Description" },
+							{ "title": "Priority (%)" }
+						];
+					create("resultTable", columns, dataset);
+					// colorear NO ANDA!!
+					var nodes = $('#resultTable').DataTable().rows( function (idx, data, node) {
+							return $.inArray(idx, indexes) != -1;
+						}).nodes()
+						.to$() 
+						.addClass( 'highlight' );
 				});
 
  				/**
@@ -966,7 +1030,7 @@ console.log(critV);
 	 				row.append( col );
 	 				row.prepend( '<p>'+title+'</p>');
 
-					$('#'+ tab +' .row .panel .panel-body').append( row );
+					$('#'+ tab +' .container-fluid .row:nth-child(2) .panel .panel-body').append( row );
 				}
 
 				/**
@@ -1136,7 +1200,7 @@ console.log(critV);
 					var R = [];
 					for (var i = 0; i < A.length; i++) {
 						R[i] = [];
-						for (var j=0; j< B[i].length; j++) {
+						for (var j=0; j< B[0].length; j++) {
 							sum = 0;
 							for (var k=0; k< B.length; k++) {
 								sum += A[i][k] * B[k][j];
