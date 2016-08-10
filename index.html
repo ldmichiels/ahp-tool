@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>AHP Tool</title>
+		<title>AHP</title>
 
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -39,32 +39,35 @@
 	</head>
 	<body>
 		<div class="page-header">
-		  <h1>AHP Tool<small>The analytic hierarchy process tool</small></h1>
+		  <h1>AHP<small>Proceso Analítico Jerárquico</small></h1>
 		</div>
 
  		<div role="tabpanel">
  			<!-- Nav tabs -->
  			<ul class="nav nav-tabs" role="tablist">
  				<li role="presentation" class="active">
- 					<a href="#home-tab" aria-controls="home" role="tab" data-toggle="tab">Home</a>
+ 					<a href="#home-tab" aria-controls="home" role="tab" data-toggle="tab">Inicio</a>
  				</li>
  				<li role="presentation">
- 					<a href="#getstart-tab" aria-controls="getstart" role="tab" data-toggle="tab">Getting Started</a>
+ 					<a href="#getstart-tab" aria-controls="getstart" role="tab" data-toggle="tab">Cómo operar</a>
  				</li>
  				<li role="presentation">
- 					<a href="#goal-tab" aria-controls="goal" role="tab" data-toggle="tab">Goal</a>
+ 					<a href="#goal-tab" aria-controls="goal" role="tab" data-toggle="tab">Objetivo</a>
  				</li>
  				<li role="presentation">
- 					<a href="#criteria-tab" aria-controls="criteria" role="tab" data-toggle="tab">Criteria</a>
+ 					<a href="#criteria-tab" aria-controls="criteria" role="tab" data-toggle="tab">Criterios</a>
  				</li>
  				<li role="presentation">
- 					<a href="#alternatives-tab" aria-controls="alternatives" role="tab" data-toggle="tab">Alternatives</a>
+ 					<a href="#alternatives-tab" aria-controls="alternatives" role="tab" data-toggle="tab">Alternativas</a>
  				</li>
  				<li role="presentation">
- 					<a href="#process-tab" aria-controls="process" role="tab" data-toggle="tab">Criteria Judgment</a>
+ 					<a href="#process-tab" aria-controls="process" role="tab" data-toggle="tab">Juicios de Criterios</a>
  				</li>
  				<li role="presentation">
- 					<a href="#altPriorities-tab" aria-controls="altPriorities" role="tab" data-toggle="tab">Alternatives Judgment</a>
+ 					<a href="#altPriorities-tab" aria-controls="altPriorities" role="tab" data-toggle="tab">Juicios de Alternativas</a>
+ 				</li>
+ 				<li role="presentation">
+ 					<a href="#creditos-tab" aria-controls="creditos" role="tab" data-toggle="tab">Créditos</a>
  				</li>
  			</ul>
  		
@@ -74,12 +77,12 @@
 	 				<!-- Deberian crearse dinamicamente (con nombre de tabla ponele) -->
 	 				<div class="row">
 						<div id="consistencyOk" class="alert alert-success">
-							<strong>Succes!</strong> The matrix is consistent.
+							<strong>Pefecto!</strong> La matriz es consistente.
 						</div>
 					</div>
 					<div class="row">
 						<div id="consistencyFail" class="alert alert-danger">
-							<strong>Fail!</strong> The matrix is not consistent.
+							<strong>Alerta!</strong> La matriz es inconsistente.
 						</div>
 					</div>
 	 			</div>
@@ -87,17 +90,17 @@
  				<div role="tabpanel" class="tab-pane active" id="home-tab">
  					<div class="jumbotron">
 						<div class="container">
-							<h1>AHP Tool</h1>
-							<p>The analytic hierarchy process tool</p>
+							<h1>AHP</h1>
+							<p>Proceso Analítico Jerárquico</p>
 							<div class="well well-lg">
 								<p>
-								The analytic hierarchy process (AHP) is a structured technique for organizing and analyzing complex decisions, based on mathematics and psychology. It was developed by Thomas L. Saaty in the 1970s and has been extensively studied and refined since then.
+								El Proceso de Jerarquía Analítica (PJA) (a veces también traducido como Proceso Analítico Jerárquico) es una técnica estructurada para tratar con decisiones complejas. En vez de prescribir la decisión «correcta», el PJA ayuda a los tomadores de decisiones a encontrar la solución que mejor se ajusta a sus necesidades y a su compresión del problema.
 								</p>
 								<p>
-								It has particular application in group decision making, and is used around the world in a wide variety of decision situations, in fields such as government, business, industry, healthcare, shipbuilding and education.
+								Esta herramienta, basada en matemáticas y psicología, fue desarrollada por Thomas L. Saaty en los setenta y ha sido extensivamente estudiado y refinado, desde entonces. El PJA provee un marco de referencia racional y comprensivo para estructurar un problema de decisión, para representar y cuantificar sus elementos, para relacionar esos elementos a los objetivos generales, y para evaluar alternativas de solución. El PJA es usado alrededor del mundo en una amplia variedad de situaciones de decisión, en campos tales como gobierno, negocios, industria, salud y educación.
 								</p>
 							</div>
-							<a class="btn btn-primary btn-lg" href="https://en.wikipedia.org/wiki/Analytic_hierarchy_process">Learn more</a>
+							<a class="btn btn-primary btn-lg" href="https://es.wikipedia.org/wiki/Proceso_Anal%C3%ADtico_Jer%C3%A1rquico">Leer más</a>
 						</div>
 					</div>
  				</div>
@@ -105,13 +108,21 @@
  				<div role="tabpanel" class="tab-pane" id="getstart-tab">
  					<div class="container-fluid">
  						<div class="row">
- 							<p>Description of the process here...</p>
+ 							<p>Descripción del proceso</p>
  							<ol>
- 								<li>Load alternatives and lock.</li>
- 								<li>Load criteria and lock.</li>
- 								<li>Load judgment for criteria, subcriteria and alternatives.</li>
- 								<li>Go to goal tab and click to calculate.</li>
- 								<li>Prioritized alternatives will be listed in a table and the best option will be highlighted in green.</li>
+ 								<li>Definir el objetivo.</li>
+ 								<li>Cargar las alternativas y bloquear la tabla.</li>
+ 								<li>Cargar los criterios y boquear la tabla.</li>
+ 								<li>Cargar los juicios sobre los criterios, subcriterios y alternativas.</li>
+ 								<li>Ir a la solapa del objetivo y calcular.</li>
+ 								<li>Las alternativas priorizadas se listarán en una tabla y la mejor opción estará resaltada en verde.</li>
+ 							</ol>
+ 						</div>
+ 						<div class="row">
+ 							<p>Recomendaciones: </p>
+ 							<ol>
+ 								<li>No utilizar demasiadas alternativas y criterios.</li>
+ 								<li></li>
  							</ol>
  						</div>
  					</div>
@@ -120,12 +131,12 @@
  				<div role="tabpanel" class="tab-pane" id="goal-tab">
  					
  					<div class="form-group">
- 						<label for="input" class="col-sm-2 control-label">Goal:</label>
+ 						<label for="input" class="col-sm-2 control-label">Objetivo: </label>
  						<div class="col-sm-10">
  							<input type="text" name="goal" id="inputGoal" class="form-control" value="some goal you propose..." required="required" pattern="" title="Goal">
  						</div>
  					</div>
- 					<button type="button" class="btn btn-lg btn-success" id="calculate">Calculate</button>
+ 					<button type="button" class="btn btn-lg btn-success" id="calculate">Calcular</button>
 	 				<div class="container-fluid">
 	 					<div class="row" id="#result">
 	 						<table id="resultTable" class="table table-hover">
@@ -139,17 +150,17 @@
 						<div class="container-fluid">
 							<div class="row">
 								<!-- Default panel contents -->
-								<div class="panel-heading">Load Criteria</div>
+								<div class="panel-heading">Cargar criterios</div>
 								<div class="panel-body">
-									<p>You should load your criteria in the following table</p>
+									<p>Usted debería cargar sus criterios en la siguiente tabla.</p>
 									<div class="btn-group" role="group" aria-label="...">
 										<!-- Trigger the modal with a button -->
-			  							<button type="button" id="modalCriteriaBtn" class="btn btn-default" data-toggle="modal" data-target="#myModalCriteria">Add</button>
-										<button type="button" id="removeCriteria" class="btn btn-default">Remove</button>
-										<button type="button" id="clearCriteria" class="btn btn-default">Clear All</button>
+			  							<button type="button" id="modalCriteriaBtn" class="btn btn-default" data-toggle="modal" data-target="#myModalCriteria">Agregar</button>
+										<button type="button" id="removeCriteria" class="btn btn-default">Borrar</button>
+										<button type="button" id="clearCriteria" class="btn btn-default">Limpiar todo</button>
 									</div>
-									<button type="button" id="subCriteria" data-toggle="modal" href='#subcriteriaModal' class="btn btn-default">Subcriteria</button>
-									<button type="button" id="lockCriteriaTable" class="btn btn-default">Lock</button>
+									<button type="button" id="subCriteria" data-toggle="modal" href='#subcriteriaModal' class="btn btn-default">Subcriterios</button>
+									<button type="button" id="lockCriteriaTable" class="btn btn-default">Bloquear</button>
 								</div>
 							</div>
 							<div class="row">
@@ -158,8 +169,8 @@
 			 						<thead>
 			 							<tr>
 			 								<th>Id</th>
-			 								<th>Name</th>
-			 								<th>Description</th>
+			 								<th>Nombre</th>
+			 								<th>Descripción</th>
 			 							</tr>
 			 						</thead>
 			 						<tbody>
@@ -175,16 +186,16 @@
 						<div class="container-fluid">
 							<div class="row">
 								<!-- Default panel contents -->
-								<div class="panel-heading">Load Alternatives</div>
+								<div class="panel-heading">Cargar alternativas</div>
 								<div class="panel-body">
-								<p>You should load your alternatives in the following table.</p>
+								<p>Usted debería cargar sus alternativas en la siguiente tabla.</p>
 								<div class="btn-group" role="group" aria-label="...">
 									<!-- Trigger the modal with a button -->
-									<button type="button" id="modalAlternativesBtn" class="btn btn-default" data-toggle="modal" data-target="#myModalAlternatives">Add</button>
-									<button type="button" id="removeAlternative" class="btn btn-default">Remove</button>
-									<button type="button" id="clearAlternatives" class="btn btn-default">Clear All</button>
+									<button type="button" id="modalAlternativesBtn" class="btn btn-default" data-toggle="modal" data-target="#myModalAlternatives">Agregar</button>
+									<button type="button" id="removeAlternative" class="btn btn-default">Borrar</button>
+									<button type="button" id="clearAlternatives" class="btn btn-default">Limpiar todo</button>
 								</div>
-								<button type="button" id="lockAlternativesTable" class="btn btn-default">Lock</button>
+								<button type="button" id="lockAlternativesTable" class="btn btn-default">Bloquear</button>
 								</div>
 							</div>
 							<div class="row">
@@ -193,8 +204,8 @@
 									<thead>
 										<tr>
 											<th>Id</th>
-											<th>Name</th>
-											<th>Description</th>
+											<th>Nombre</th>
+											<th>Descripción</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -253,6 +264,27 @@
 		 				</div>
  					</div>
  				</div>
+ 				<!-- Eighth tab -->
+ 				<div role="tabpanel" class="tab-pane" id="creditos-tab">
+ 					<div class="container-fluid">
+ 						<div class="row">
+ 							<div class="panel panel-default">
+			 					<div class="panel-heading">
+			 						<h3 class="panel-title">Créditos</h3>
+			 					</div>
+			 					<div class="panel-body">
+			 						<p>Este trabajo fue realizado como trabajo final para las materias de grado Investigación Operativa y la optativa Cuadro de Mando Integral de la carrera de Ingeniería de Sistemas de la <a href="http://www.unicen.edu.ar/" title="UNICEN">Universidad Nacional del Centro de la Provincia de Buenos Aires</a>, a mediados del año 2016.</p>
+			 						<p>Autor: Lucas D. Michiels</p>
+			 						<p>Profesor: Mg. Daniel Xodo</p>
+			 						<p><a href="http://www.exa.unicen.edu.ar/es" title="EXACTAS">Facultad de Ciencias Exactas</a></p>
+			 						<p>http://invop.alumnos.exa.unicen.edu.ar/</p>
+			 						<p>El proyecto puede ser descargado desde <a href="https://github.com/ldmichiels/ahp-tool">GitHub.</a>
+			 					</div>
+		 					</div>
+ 						</div>
+ 					</div>
+ 				</div>
+ 				
  			</div>
  		</div>
 
@@ -262,20 +294,20 @@
  				<div class="modal-content">
  					<div class="modal-header">
  						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
- 						<h4 class="modal-title">Sub-Criteria</h4>
+ 						<h4 class="modal-title">Sub-Criterios</h4>
  					</div>
  					<div class="modal-body">
 						<div class="btn-group" role="group" aria-label="...">
-							<button type="button" id="addSubCriteria" class="btn btn-default">Add</button>
+							<button type="button" id="addSubCriteria" class="btn btn-default">Agregar</button>
 							<!--<button type="button" id="removeSubCriteria" class="btn btn-default">Remove</button>-->
-							<button type="button" id="clearSubCriteria" class="btn btn-default">Clear All</button>
+							<button type="button" id="clearSubCriteria" class="btn btn-default">Limpiar todo</button>
 						</div>
-						<h3>Subcriteria List</h3>
+						<h3>Lista de subcriterios</h3>
 						<ul id="subCriteriaList" style="list-style-type: none"></ul>
  					</div>
  					<div class="modal-footer">
- 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
- 						<button type="button" id="saveSubcriteria" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+ 						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+ 						<button type="button" id="saveSubcriteria" class="btn btn-primary" data-dismiss="modal">Guardar cambios</button>
  					</div>
  				</div>
  			</div>
@@ -288,18 +320,18 @@
  				<div class="modal-content">
  					<div class="modal-header">
  						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
- 						<h4 class="modal-title">New Criteria</h4>
+ 						<h4 class="modal-title">Nuevo criterio</h4>
  					</div>
  					<div class="modal-body">
 	 					<div class="container-fluid">
 		 					<div class="row show-grid">
-		 						<label for="criteriaName" class="col-sm-2 control-label">Name:</label>
+		 						<label for="criteriaName" class="col-sm-2 control-label">Nombre: </label>
 		 						<div class="col-sm-10">
 		 							<input type="text" name="criteriaName" id="criteriaName" class="form-control" value="Criteria Name" required="required" pattern="" title="Criteria Name">
 		 						</div>
 		 					</div>
 	 						<div class="row show-grid">
-		 						<label for="criteriaDescription" class="col-sm-2 control-label">Description:</label>
+		 						<label for="criteriaDescription" class="col-sm-2 control-label">Descripción: </label>
 		 						<div class="col-sm-10">
 		 							<input type="text" name="criteriaDescription" id="criteriaDescription" class="form-control" value="Criteria Description" required="required" pattern="" title="Criteria Description">
 		 						</div>
@@ -307,8 +339,8 @@
 	 					</div>
 	 				</div>
  					<div class="modal-footer">
- 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
- 						<button type="button" id="addCriteria" class="btn btn-succes" data-dismiss="modal">Add</button>
+ 						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+ 						<button type="button" id="addCriteria" class="btn btn-succes" data-dismiss="modal">Agregar</button>
  					</div>
  				</div>
  			</div>
@@ -321,18 +353,18 @@
  				<div class="modal-content">
  					<div class="modal-header">
  						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
- 						<h4 class="modal-title">New Alternative</h4>
+ 						<h4 class="modal-title">Nueva alternativa</h4>
  					</div>
  					<div class="modal-body">
 	 					<div class="container-fluid">
 	 						<div class="row show-grid">
-		 						<label for="AlternativeName" class="col-sm-2 control-label">Name:</label>
+		 						<label for="AlternativeName" class="col-sm-2 control-label">Nombre: </label>
 		 						<div class="col-sm-10">
 		 							<input type="text" name="alternativeName" id="alternativeName" class="form-control" value="Alternative Name" required="required" pattern="" title="Alternative Name">
 		 						</div>
 		 					</div>
 	 						<div class="row show-grid">
-		 						<label for="alternativeDescription" class="col-sm-2 control-label">Description:</label>
+		 						<label for="alternativeDescription" class="col-sm-2 control-label">Descripción: </label>
 		 						<div class="col-sm-10">
 		 							<input type="text" name="alternativeDescription" id="alternativeDescription" class="form-control" value="Alternative Description" required="required" pattern="" title="Alternative Description">
 		 						</div>
@@ -340,8 +372,8 @@
 	 					</div>
  					</div>
  					<div class="modal-footer">
- 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
- 						<button type="button" id="addAlternative" class="btn btn-succes" data-dismiss="modal">Add</button>
+ 						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+ 						<button type="button" id="addAlternative" class="btn btn-succes" data-dismiss="modal">Agregar</button>
  					</div>
  				</div>
  			</div>
@@ -353,7 +385,7 @@
  				<div class="modal-content">
  					<div class="modal-header">
  						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
- 						<h4 class="modal-title">Judgment</h4>
+ 						<h4 class="modal-title">Juicios</h4>
  					</div>
  					<div class="modal-body">
  						<div class="container-fluid">
@@ -361,54 +393,54 @@
 		 						<table class="table table-condensed table-hover">
 		 							<thead>
 		 								<tr>
-		 									<th>Scale</th>
-		 									<th>Numerical Rating</th>
-		 									<th>Reciprocal</th>
+		 									<th>Escala</th>
+		 									<th>Valor numérico</th>
+		 									<th>Valor reciproco</th>
 		 								</tr>
 		 							</thead>
 		 							<tbody>
 		 								<tr>
-		 									<td>Extremly importance</td>
+		 									<td>Extremadamente preferida</td>
 		 									<td>9</td>
 		 									<td>1/9</td>
 		 								</tr>
 		 								<tr>
-		 									<td>Very to extremly strongly importance</td>
+		 									<td>Preferencia entre muy fuerte o demostrada y extremadamente preferida</td>
 		 									<td>8</td>
 		 									<td>1/8</td>
 		 								</tr>
 		 								<tr>
-		 									<td>Very strongly importance</td>
+		 									<td>Preferencia muy fuerte o demostrada</td>
 		 									<td>7</td>
 		 									<td>1/7</td>
 		 								</tr>
 		 								<tr>
-		 									<td>Strongly to very strongly importance</td>
+		 									<td>Preferencia entre fuerte y muy fuerte o demostrada</td>
 		 									<td>6</td>
 		 									<td>1/6</td>
 		 								</tr>
 		 								<tr>
-		 									<td>Strongly importance</td>
+		 									<td>Preferencia fuerte</td>
 		 									<td>5</td>
 		 									<td>1/5</td>
 		 								</tr>
 		 								<tr>
-		 									<td>Moderately to strngly importance</td>
+		 									<td>Preferencia entre moderada y fuerte</td>
 		 									<td>4</td>
 		 									<td>1/4</td>
 		 								</tr>
 		 								<tr>
-		 									<td>Moderately importance</td>
+		 									<td>Preferencia moderada</td>
 		 									<td>3</td>
 		 									<td>1/3</td>
 		 								</tr>
 		 								<tr>
-		 									<td>Equally to moderately importance</td>
+		 									<td>Preferencia entre igual y moderada</td>
 		 									<td>2</td>
 		 									<td>1/2</td>
 		 								</tr>
 		 								<tr>
-		 									<td>Equally importance</td>
+		 									<td>Igualmente preferida</td>
 		 									<td>1</td>
 		 									<td>1</td>
 		 								</tr>
@@ -416,7 +448,7 @@
 		 						</table>
 		 					</div>
 	 						<div class="row show-grid">
-		 						<label for="judgment" class="col-sm-2 control-label">Judgment:</label>
+		 						<label for="judgment" class="col-sm-2 control-label">Juicios: </label>
 		 						<div class="col-sm-10">
 		 							<input type="number" name="judgment" id="judgment" class="form-control" required="required" min="0" max="9" title="Judgment">
 		 						</div>
@@ -424,8 +456,8 @@
  						</div>
  					</div>
  					<div class="modal-footer">
- 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
- 						<button type="button" class="btn btn-primary"  data-dismiss="modal" id="loadJudgment">Accept</button>
+ 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+ 						<button type="button" class="btn btn-primary"  data-dismiss="modal" id="loadJudgment">Aceptar</button>
  					</div>
  				</div>
  			</div>
@@ -477,7 +509,7 @@
  				const TYPE_THREE = 3;
  				const TYPE_FOUR = 4;
 
-				const CELL_CONTENT_DEFAULT = 'Click to edit!';
+				const CELL_CONTENT_DEFAULT = 'Click para editar!';
 				const CLASS_COLUMN8 = "col-xs-8 col-sm-8 col-md-8 col-lg-8";
 	 			const CLASS_COLUMN4 = "col-xs-4 col-sm-4 col-md-4 col-lg-4";
 				
@@ -612,7 +644,7 @@
 						if ( !done(t) ) {
 							alert("Faltan cargar criterios!!");
 							return false;
-						} else { console.log("It's Ok!"); }
+						}
 
 						switch ( info[idx].type ) {
 							case TYPE_ONE:
@@ -632,6 +664,7 @@
 								break;
 							default:
 								alert("Error calculando!");
+								return false;
 								break;
 						}
 					}
@@ -647,8 +680,6 @@
 					mtx = transpose( mtx );
 
 					pVector = multiplyMatrix( mtx, critV );
-
-					//create("resultTable",[{ "title": "Priority Vector" }], pVector);
 
 					var max = 0;
 					var indexes = [];
@@ -668,9 +699,9 @@
 					}
 					console.log(indexes);
 					var columns = [
-							{ "title": "Alternative" },
-							{ "title": "Alternative Description" },
-							{ "title": "Priority (%)" }
+							{ "title": "Alternativa" },
+							{ "title": "Descripción" },
+							{ "title": "Prioridad (%)" }
 						];
 					create("resultTable", columns, dataset);
 					// colorear NO ANDA!!
@@ -730,7 +761,7 @@
 				$('#lockCriteriaTable').on( 'click', function () {
 					if ( $( this ).text() == "Lock" ) {
 						if ( $('#lockAlternativesTable').text() == "Lock" ) { 
-							alert("No puede bloquear! Antes debe bloquear las alternativas.");
+							alert("No se puede bloquear! Antes debe bloquear las alternativas.");
 						}
 						else {
 							$(this).text("Unlock");
@@ -915,7 +946,7 @@
 					var table = create(t,columns,rows);
 					completeTheDiagonal( table );
 
-					var vector = create(v,[{ "title": "Priority Vector" }]);
+					var vector = create(v,[{ "title": "Vector Prioridad" }]);
 
 					$( '#' + t ).on('click', 'td', function() { 
 						lastTable = table;
@@ -934,8 +965,6 @@
 				 * Alternatives judgments
 				 */
 
-				var altPaCoCols = [{ "title": "Alternative" }];
-
 				/**
 				 * Crea la tabla de comparación entre alternativas según el criterio dado
 				 */
@@ -946,7 +975,7 @@
 					else
 						console.log("Adding SubCritery Table for " + critery.subCriteria[subCIdx]);
 
-					var columns = [{ "title": "Alternative" }];
+					var columns = [{ "title": "Alternativa" }];
 					for (idx in alternatives) {
 						columns.push( { "title": alternatives[idx].name } );
 					}
@@ -968,7 +997,7 @@
 					var table = create( t, columns, rows );
 					completeTheDiagonal( table );
 
-					var vector = create( v, [{ "title": "Priority Vector" }] );
+					var vector = create( v, [{ "title": "Vector Prioridad" }] );
 
 					$( '#' + t ).on('click', 'td', function() {
 						lastTable = table;
@@ -1342,7 +1371,7 @@
 						case 14: return	1.570; break;
 						case 15: return	1.583; break;
 						case 16: return	1.595; break;
-						default: return -1; break;
+						default: return 1.6; break;
  					}
  				}
 			} );
