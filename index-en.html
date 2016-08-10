@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>AHP Tool</title>
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		<!-- jQuery -->
+		<script src="http://code.jquery.com/jquery.js"></script>
+		<!-- <script src="https://code.jquery.com/jquery-1.12.3.js"></script> -->
+		<!-- Bootstrap JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<!-- Data Tables Lib with CDN -->
+		<!--
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.css">
+		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
+		-->
+		<style type="text/css" media="screen">
+			.show-grid {
+				margin-bottom: 15px;
+			}
+
+			.highlight {
+				background-color: #5CB85C !important; 
+			}
+		</style>
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/r-2.1.0/se-1.2.0/datatables.min.css"/>
+		<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/r-2.1.0/se-1.2.0/datatables.min.js"></script>
+	</head>
+	<body>
+		<div class="page-header">
+		  <h1>AHP Tool<small>The analytic hierarchy process tool</small></h1>
+		</div>
+
+ 		<div role="tabpanel">
+ 			<!-- Nav tabs -->
+ 			<ul class="nav nav-tabs" role="tablist">
+ 				<li role="presentation" class="active">
+ 					<a href="#home-tab" aria-controls="home" role="tab" data-toggle="tab">Home</a>
+ 				</li>
+ 				<li role="presentation">
+ 					<a href="#getstart-tab" aria-controls="getstart" role="tab" data-toggle="tab">Getting Started</a>
+ 				</li>
+ 				<li role="presentation">
+ 					<a href="#goal-tab" aria-controls="goal" role="tab" data-toggle="tab">Goal</a>
+ 				</li>
+ 				<li role="presentation">
+ 					<a href="#criteria-tab" aria-controls="criteria" role="tab" data-toggle="tab">Criteria</a>
+ 				</li>
+ 				<li role="presentation">
+ 					<a href="#alternatives-tab" aria-controls="alternatives" role="tab" data-toggle="tab">Alternatives</a>
+ 				</li>
+ 				<li role="presentation">
+ 					<a href="#process-tab" aria-controls="process" role="tab" data-toggle="tab">Criteria Judgment</a>
+ 				</li>
+ 				<li role="presentation">
+ 					<a href="#altPriorities-tab" aria-controls="altPriorities" role="tab" data-toggle="tab">Alternatives Judgment</a>
+ 				</li>
+ 			</ul>
+ 		
+ 			<!-- Tab panes -->
+ 			<div class="tab-content">
+	 			<div class="container-fluid">
+	 				<!-- Deberian crearse dinamicamente (con nombre de tabla ponele) -->
+	 				<div class="row">
+						<div id="consistencyOk" class="alert alert-success">
+							<strong>Succes!</strong> The matrix is consistent.
+						</div>
+					</div>
+					<div class="row">
+						<div id="consistencyFail" class="alert alert-danger">
+							<strong>Fail!</strong> The matrix is not consistent.
+						</div>
+					</div>
+	 			</div>
+ 				<!-- First tab -->
+ 				<div role="tabpanel" class="tab-pane active" id="home-tab">
+ 					<div class="jumbotron">
+						<div class="container">
+							<h1>AHP Tool</h1>
+							<p>The analytic hierarchy process tool</p>
+							<div class="well well-lg">
+								<p>
+								The analytic hierarchy process (AHP) is a structured technique for organizing and analyzing complex decisions, based on mathematics and psychology. It was developed by Thomas L. Saaty in the 1970s and has been extensively studied and refined since then.
+								</p>
+								<p>
+								It has particular application in group decision making, and is used around the world in a wide variety of decision situations, in fields such as government, business, industry, healthcare, shipbuilding and education.
+								</p>
+							</div>
+							<a class="btn btn-primary btn-lg" href="https://en.wikipedia.org/wiki/Analytic_hierarchy_process">Learn more</a>
+						</div>
+					</div>
+ 				</div>
+ 				<!-- Second tab -->
+ 				<div role="tabpanel" class="tab-pane" id="getstart-tab">
+ 					<div class="container-fluid">
+ 						<div class="row">
+ 							<p>Description of the process here...</p>
+ 							<ol>
+ 								<li>Load alternatives and lock.</li>
+ 								<li>Load criteria and lock.</li>
+ 								<li>Load judgment for criteria, subcriteria and alternatives.</li>
+ 								<li>Go to goal tab and click to calculate.</li>
+ 								<li>Prioritized alternatives will be listed in a table and the best option will be highlighted in green.</li>
+ 							</ol>
+ 						</div>
+ 					</div>
+ 				</div>
+ 				<!-- Third tab -->
+ 				<div role="tabpanel" class="tab-pane" id="goal-tab">
+ 					
+ 					<div class="form-group">
+ 						<label for="input" class="col-sm-2 control-label">Goal:</label>
+ 						<div class="col-sm-10">
+ 							<input type="text" name="goal" id="inputGoal" class="form-control" value="some goal you propose..." required="required" pattern="" title="Goal">
+ 						</div>
+ 					</div>
+ 					<button type="button" class="btn btn-lg btn-success" id="calculate">Calculate</button>
+	 				<div class="container-fluid">
+	 					<div class="row" id="#result">
+	 						<table id="resultTable" class="table table-hover">
+	 						</table>
+	 					</div>
+	 				</div>
+ 				</div>
+ 				<!-- Fourth tab -->
+ 				<div role="tabpanel" class="tab-pane" id="criteria-tab">
+ 					<div class="panel panel-default">
+						<div class="container-fluid">
+							<div class="row">
+								<!-- Default panel contents -->
+								<div class="panel-heading">Load Criteria</div>
+								<div class="panel-body">
+									<p>You should load your criteria in the following table</p>
+									<div class="btn-group" role="group" aria-label="...">
+										<!-- Trigger the modal with a button -->
+			  							<button type="button" id="modalCriteriaBtn" class="btn btn-default" data-toggle="modal" data-target="#myModalCriteria">Add</button>
+										<button type="button" id="removeCriteria" class="btn btn-default">Remove</button>
+										<button type="button" id="clearCriteria" class="btn btn-default">Clear All</button>
+									</div>
+									<button type="button" id="subCriteria" data-toggle="modal" href='#subcriteriaModal' class="btn btn-default">Subcriteria</button>
+									<button type="button" id="lockCriteriaTable" class="btn btn-default">Lock</button>
+								</div>
+							</div>
+							<div class="row">
+								<!-- Table -->
+								<table id="criteriaTable" class="table table-hover">
+			 						<thead>
+			 							<tr>
+			 								<th>Id</th>
+			 								<th>Name</th>
+			 								<th>Description</th>
+			 							</tr>
+			 						</thead>
+			 						<tbody>
+			 						</tbody>
+			 					</table>
+							</div>
+						</div>
+	 				</div>
+ 				</div>
+ 				<!-- Fifth tab -->
+ 				<div role="tabpanel" class="tab-pane" id="alternatives-tab">
+ 					<div class="panel panel-default">
+						<div class="container-fluid">
+							<div class="row">
+								<!-- Default panel contents -->
+								<div class="panel-heading">Load Alternatives</div>
+								<div class="panel-body">
+								<p>You should load your alternatives in the following table.</p>
+								<div class="btn-group" role="group" aria-label="...">
+									<!-- Trigger the modal with a button -->
+									<button type="button" id="modalAlternativesBtn" class="btn btn-default" data-toggle="modal" data-target="#myModalAlternatives">Add</button>
+									<button type="button" id="removeAlternative" class="btn btn-default">Remove</button>
+									<button type="button" id="clearAlternatives" class="btn btn-default">Clear All</button>
+								</div>
+								<button type="button" id="lockAlternativesTable" class="btn btn-default">Lock</button>
+								</div>
+							</div>
+							<div class="row">
+								<!-- Table -->
+								<table id="alternativesTable" class="table table-hover">
+									<thead>
+										<tr>
+											<th>Id</th>
+											<th>Name</th>
+											<th>Description</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table> 							
+							</div>
+						</div>
+					</div>
+				</div>
+ 				<!-- Sixth tab -->
+ 				<div role="tabpanel" class="tab-pane" id="process-tab">
+	 				<div class="container-fluid">
+	 					<div class="row">
+	 						<div class="panel panel-default">
+			 					<div class="panel-heading">
+			 						<h3 class="panel-title">Criteria Priorities</h3>
+			 					</div>
+			 					<div class="panel-body">
+			 						<p>You need to lock the tables of criteria and then upload your judgments.</p>
+			 					</div>
+			 				</div>
+	 					</div>
+		 				<div class="row">
+		 					<div class="panel panel-default">
+		 						<div class="panel-heading">
+		 							<h3 class="panel-title">Criteria Pairwise Comparisons Matrix</h3>
+		 						</div>
+		 						<div class="panel-body">
+		 						</div>
+		 					</div>
+		 				</div>
+	 				</div>
+ 				</div>
+ 				<!-- Seventh tab -->
+ 				<div role="tabpanel" class="tab-pane" id="altPriorities-tab">
+ 					<div class="container-fluid">
+ 						<div class="row">
+ 							<div class="panel panel-default">
+			 					<div class="panel-heading">
+			 						<h3 class="panel-title">Alternatives Priorities</h3>
+			 					</div>
+			 					<div class="panel-body">
+			 						<p>You need to lock the tables of criteria and alternatives and then upload your judgments.</p>
+			 						<p>You must find local priorities betwen alternatives.</p>
+			 					</div>
+		 					</div>
+ 						</div>
+		 				<div class="row">
+		 					<div class="panel panel-default">
+		 						<div class="panel-heading">
+		 							<h3 class="panel-title">Alternatives Pairwise Comparisons Matrix</h3>
+		 						</div>
+		 						<div class="panel-body">
+		 						</div>
+		 					</div>
+		 				</div>
+ 					</div>
+ 				</div>
+ 			</div>
+ 		</div>
+
+ 		<!-- Modal SubCriteria -->
+ 		<div class="modal fade" id="subcriteriaModal">
+ 			<div class="modal-dialog">
+ 				<div class="modal-content">
+ 					<div class="modal-header">
+ 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+ 						<h4 class="modal-title">Sub-Criteria</h4>
+ 					</div>
+ 					<div class="modal-body">
+						<div class="btn-group" role="group" aria-label="...">
+							<button type="button" id="addSubCriteria" class="btn btn-default">Add</button>
+							<!--<button type="button" id="removeSubCriteria" class="btn btn-default">Remove</button>-->
+							<button type="button" id="clearSubCriteria" class="btn btn-default">Clear All</button>
+						</div>
+						<h3>Subcriteria List</h3>
+						<ul id="subCriteriaList" style="list-style-type: none"></ul>
+ 					</div>
+ 					<div class="modal-footer">
+ 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+ 						<button type="button" id="saveSubcriteria" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+ 					</div>
+ 				</div>
+ 			</div>
+ 		</div>
+
+ 		<!-- Modal Criteria -->
+ 		<div class="modal fade" id="myModalCriteria">
+ 			<div class="modal-dialog">
+ 				<!-- Modal Content -->
+ 				<div class="modal-content">
+ 					<div class="modal-header">
+ 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+ 						<h4 class="modal-title">New Criteria</h4>
+ 					</div>
+ 					<div class="modal-body">
+	 					<div class="container-fluid">
+		 					<div class="row show-grid">
+		 						<label for="criteriaName" class="col-sm-2 control-label">Name:</label>
+		 						<div class="col-sm-10">
+		 							<input type="text" name="criteriaName" id="criteriaName" class="form-control" value="Criteria Name" required="required" pattern="" title="Criteria Name">
+		 						</div>
+		 					</div>
+	 						<div class="row show-grid">
+		 						<label for="criteriaDescription" class="col-sm-2 control-label">Description:</label>
+		 						<div class="col-sm-10">
+		 							<input type="text" name="criteriaDescription" id="criteriaDescription" class="form-control" value="Criteria Description" required="required" pattern="" title="Criteria Description">
+		 						</div>
+		 					</div>
+	 					</div>
+	 				</div>
+ 					<div class="modal-footer">
+ 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+ 						<button type="button" id="addCriteria" class="btn btn-succes" data-dismiss="modal">Add</button>
+ 					</div>
+ 				</div>
+ 			</div>
+ 		</div>
+
+ 		<!-- Modal Alternatives-->
+ 		<div class="modal fade" id="myModalAlternatives">
+ 			<div class="modal-dialog">
+ 				<!-- Modal Content -->
+ 				<div class="modal-content">
+ 					<div class="modal-header">
+ 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+ 						<h4 class="modal-title">New Alternative</h4>
+ 					</div>
+ 					<div class="modal-body">
+	 					<div class="container-fluid">
+	 						<div class="row show-grid">
+		 						<label for="AlternativeName" class="col-sm-2 control-label">Name:</label>
+		 						<div class="col-sm-10">
+		 							<input type="text" name="alternativeName" id="alternativeName" class="form-control" value="Alternative Name" required="required" pattern="" title="Alternative Name">
+		 						</div>
+		 					</div>
+	 						<div class="row show-grid">
+		 						<label for="alternativeDescription" class="col-sm-2 control-label">Description:</label>
+		 						<div class="col-sm-10">
+		 							<input type="text" name="alternativeDescription" id="alternativeDescription" class="form-control" value="Alternative Description" required="required" pattern="" title="Alternative Description">
+		 						</div>
+		 					</div>
+	 					</div>
+ 					</div>
+ 					<div class="modal-footer">
+ 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+ 						<button type="button" id="addAlternative" class="btn btn-succes" data-dismiss="modal">Add</button>
+ 					</div>
+ 				</div>
+ 			</div>
+ 		</div>
+
+ 		<!-- Modal Judgment -->
+ 		<div class="modal fade" id="judgmentsPopup">
+ 			<div class="modal-dialog">
+ 				<div class="modal-content">
+ 					<div class="modal-header">
+ 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+ 						<h4 class="modal-title">Judgment</h4>
+ 					</div>
+ 					<div class="modal-body">
+ 						<div class="container-fluid">
+	 						<div class="row show-grid">
+		 						<table class="table table-condensed table-hover">
+		 							<thead>
+		 								<tr>
+		 									<th>Scale</th>
+		 									<th>Numerical Rating</th>
+		 									<th>Reciprocal</th>
+		 								</tr>
+		 							</thead>
+		 							<tbody>
+		 								<tr>
+		 									<td>Extremly importance</td>
+		 									<td>9</td>
+		 									<td>1/9</td>
+		 								</tr>
+		 								<tr>
+		 									<td>Very to extremly strongly importance</td>
+		 									<td>8</td>
+		 									<td>1/8</td>
+		 								</tr>
+		 								<tr>
+		 									<td>Very strongly importance</td>
+		 									<td>7</td>
+		 									<td>1/7</td>
+		 								</tr>
+		 								<tr>
+		 									<td>Strongly to very strongly importance</td>
+		 									<td>6</td>
+		 									<td>1/6</td>
+		 								</tr>
+		 								<tr>
+		 									<td>Strongly importance</td>
+		 									<td>5</td>
+		 									<td>1/5</td>
+		 								</tr>
+		 								<tr>
+		 									<td>Moderately to strngly importance</td>
+		 									<td>4</td>
+		 									<td>1/4</td>
+		 								</tr>
+		 								<tr>
+		 									<td>Moderately importance</td>
+		 									<td>3</td>
+		 									<td>1/3</td>
+		 								</tr>
+		 								<tr>
+		 									<td>Equally to moderately importance</td>
+		 									<td>2</td>
+		 									<td>1/2</td>
+		 								</tr>
+		 								<tr>
+		 									<td>Equally importance</td>
+		 									<td>1</td>
+		 									<td>1</td>
+		 								</tr>
+		 							</tbody>
+		 						</table>
+		 					</div>
+	 						<div class="row show-grid">
+		 						<label for="judgment" class="col-sm-2 control-label">Judgment:</label>
+		 						<div class="col-sm-10">
+		 							<input type="number" name="judgment" id="judgment" class="form-control" required="required" min="0" max="9" title="Judgment">
+		 						</div>
+		 					</div>
+ 						</div>
+ 					</div>
+ 					<div class="modal-footer">
+ 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+ 						<button type="button" class="btn btn-primary"  data-dismiss="modal" id="loadJudgment">Accept</button>
+ 					</div>
+ 				</div>
+ 			</div>
+ 		</div>
+
+		<script>
+ 			$(document).ready(function() {
+
+ 				function Critery(i,n,d) {
+ 					this.id = i;
+ 					this.name = n;
+ 					this.description = d;
+ 					this.subCriteria = [];
+
+ 					this.addSubCritery = function (sc) {
+ 						this.subCriteria.push( sc );
+ 					};
+ 					this.clearSubCriteria = function () {
+ 						this.subCriteria = [];
+ 					};
+ 				}
+
+ 				function Alternative(i,n,d) {
+ 					this.id = i;
+ 					this.name = n;
+ 					this.description = d;
+ 				}
+
+ 				function Node(tn,vn) {
+ 					this.tableName = tn;
+ 					this.vectorName = vn;
+
+ 					this.table = null;
+ 					this.vector = null;
+ 					this.criteryId = null;
+ 					this.type = null;
+ 				}
+
+ 				// General
+ 				/**
+ 				 * Types for Nodes
+ 				 * 1.Crit x Crit
+ 				 * 2.SubC x SubC
+ 				 * 3.Alt x Crit
+ 				 * 4.Alt x SubC
+ 				 */
+ 				const TYPE_ONE = 1;
+ 				const TYPE_TWO = 2;
+ 				const TYPE_THREE = 3;
+ 				const TYPE_FOUR = 4;
+
+				const CELL_CONTENT_DEFAULT = 'Click to edit!';
+				const CLASS_COLUMN8 = "col-xs-8 col-sm-8 col-md-8 col-lg-8";
+	 			const CLASS_COLUMN4 = "col-xs-4 col-sm-4 col-md-4 col-lg-4";
+				
+				var alternatives = [];
+				var criteria = [];
+				var subcriteria = [];
+				var info = [];
+
+				var lastIdx;
+				var lastTable;
+				var lastVector;
+
+				// Hide alert divs (we show it later, when we need it)
+				$('#consistencyFail').hide();
+				$('#consistencyOk').hide();
+
+				/**
+				 * Add Subcriteria
+				 */
+				var counter = 0;
+				var firstTime = true;
+				var pos;
+
+				/**
+				 * Initial configuration for modal popup
+				 */
+				$('#subcriteriaModal').on('show.bs.modal', function (event) {
+					var data = criteriaTable.rows("[class*='selected']").data().toArray()[0];
+					var critery = getElementWithId( data[0], criteria );
+					pos = criteria.indexOf( critery );
+					firstTime = false;
+					for ( idx in critery.subCriteria ) {
+						newSubcriteriaItem( critery.subCriteria[idx] );
+					}
+				});
+
+				$('#subcriteriaModal').on('hide.bs.modal', function (event) {
+					var elems = $("ul#subCriteriaList li");
+					
+					elems.each(function () {
+						$( this ).detach();
+					});
+					$( '#addSubCriteria' ).prop("disabled", false);
+				});
+
+				$('#addSubCriteria').on( 'click', function () {
+					$( this ).prop("disabled", true);
+					newSubcriteriaItem();
+				});
+
+				function newSubcriteriaItem( desc ) {
+					// optional parameter
+					var desc = desc || "";
+
+					var input = $('<input type="text" class="form-control">').val( desc );
+					var btn = $('<button type="button" class="btn btn-default" disabled="true">Ok!</button>');
+					var span = $('<span class="input-group-btn"></span>').append( btn );
+					var div = $('<div class="input-group"></div>').append( input,span );
+					var li = $('<li id="subCriteriaName-'+ counter +'"></li>').append( div );
+					$("ul#subCriteriaList").append( li );
+					
+					if (desc != "") {
+						btn.text( 'Delete' );
+						input.prop("disabled", true);
+						counter++;
+						$( '#addSubCriteria' ).prop("disabled", false);
+					};
+					
+					$('#subCriteriaName-'+ counter +' div button').on( 'click', function() {
+						if ( $(this).text() == 'Ok!') {
+							counter++;
+							input.prop("disabled", true);
+							$(this).text('Delete');
+							$( '#addSubCriteria' ).prop("disabled", false);
+						} else {
+							counter--;
+							li.detach();
+						}
+					});
+
+					$('#subCriteriaName-'+ counter +' div input').on( 'keyup', function () {
+						if($(this).val().length !=0)
+							//$('.ok').each(function(){ $(this).prop('disabled', false) });
+							$( this ).parent().children('span').children('button').prop('disabled', false);
+						else
+							//$('.ok').each(function(){ $(this).prop('disabled', true) });
+							$( this ).parent().children('span').children('button').prop('disabled', true);
+					});
+				}
+
+				$('#clearSubCriteria').on( 'click', function () {
+					$( '#subCriteriaList' ).empty();
+					$( '#addSubCriteria' ).prop("disabled", false);
+					criteria[pos].clearSubCriteria();
+				});
+
+				$('#saveSubcriteria').on( 'click', function () {
+					// Reset variables
+					firstTime = true;
+					counter = 0;
+					criteria[pos].clearSubCriteria();
+					var elems = $("ul#subCriteriaList li");
+					
+					elems.each(function () {
+						criteria[pos].addSubCritery( $( this ).find('div input').val() );
+						$(this).detach();
+					});
+				});
+
+				/**
+				 *
+				 *
+				 */
+				$('#calculate').on('click', function () {
+					var mtx = [];
+					var critV = [];
+					var mtxSub = [];
+					var subcV = [];
+					var vectors = [];
+
+					/*
+						1. Resolver subcriterios
+						2. Armar matriz
+						3. Multiplicar Matriz x vector de criterios
+					*/
+					for (idx in info) {
+						var t = $( '#' + info[idx].tableName ).DataTable();
+						var v = $( '#' + info[idx].vectorName ).DataTable().data().toArray();
+						var c = info[idx].criteryId;
+						var s = info[idx].subCriteryId;
+
+						if ( !done(t) ) {
+							alert("Faltan cargar criterios!!");
+							return false;
+						} else { console.log("It's Ok!"); }
+
+						switch ( info[idx].type ) {
+							case TYPE_ONE:
+								critV = v;
+								break;
+							case TYPE_TWO:
+								subcV[ c ] = v;
+								break;
+							case TYPE_THREE:
+								vectors[ c ] = v;
+								break;
+							case TYPE_FOUR:
+								if (mtxSub[ c ] == null)
+									mtxSub[ c ] = [];
+								//mtxSub[ c ].push( v );
+								mtxSub[ c ][ s ] = v ;
+								break;
+							default:
+								alert("Error calculando!");
+								break;
+						}
+					}
+
+					for (idx in mtxSub) {
+						vectors[ idx ] = multiplyMatrix( transpose( mtxSub[idx] ), subcV[idx] );
+					}
+
+					for (idx in vectors) {
+						mtx.push( vectors[idx] );
+					}
+
+					mtx = transpose( mtx );
+
+					pVector = multiplyMatrix( mtx, critV );
+
+					//create("resultTable",[{ "title": "Priority Vector" }], pVector);
+
+					var max = 0;
+					var indexes = [];
+					var dataset = [];
+
+					for (idx in pVector) {
+						var row = [];
+						row.push( alternatives[ idx ].name );
+						row.push( alternatives[ idx ].description );
+						row.push( (pVector[ idx ][0] * 100).toFixed(2) );
+						dataset.push( row );
+
+						if (pVector[ idx ][0] >= max) {
+							max = pVector[ idx ][0];
+							indexes.push( Number(idx) );
+						}
+					}
+					console.log(indexes);
+					var columns = [
+							{ "title": "Alternative" },
+							{ "title": "Alternative Description" },
+							{ "title": "Priority (%)" }
+						];
+					create("resultTable", columns, dataset);
+					// colorear NO ANDA!!
+					var nodes = $('#resultTable').DataTable().rows( function (idx, data, node) {
+							return $.inArray(idx, indexes) != -1;
+						}).nodes()
+						.to$() 
+						.addClass( 'highlight' );
+				});
+
+ 				/**
+ 				 * Criteria Functionality
+ 				 */
+
+				$('#lockCriteriaTable').prop("disabled", true);
+				$('#modalCriteriaBtn').prop("disabled", true);
+
+				var criteriaTable = $('#criteriaTable').DataTable({
+					// Select Extension Enable
+					select: {
+						style: 'single',//'os',
+						sort: false,
+						className: 'selected',
+						blurable: true
+					},
+					searching: false
+				});
+
+				$('#addCriteria').on( 'click', function () {
+					var id = next( criteria );
+					var name = $('#criteriaName').val();
+					var desc = $('#criteriaDescription').val();
+					criteriaTable.row.add( [
+							id,
+							name,
+							desc
+						] ).draw( false );
+					$('#lockCriteriaTable').prop("disabled", false);
+					criteria.push( new Critery(id, name, desc) );
+				} );
+
+				$('#removeCriteria').on( 'click', function () {
+					var elem = criteriaTable.rows("[class*='selected']").data().toArray()[0];
+					criteria.splice( criteria.indexOf( getElementWithId( elem[0], criteria ) ), 1 );
+					criteriaTable.rows("[class*='selected']").remove().draw( false );
+					
+					if (criteriaTable.rows().count() == 0)
+						$('#lockCriteriaTable').prop("disabled", true);
+				} );
+
+				$('#clearCriteria').on( 'click', function () {
+					criteriaTable.clear().draw();
+					$('#lockCriteriaTable').prop("disabled", true);
+					criteria = [];
+				});
+
+				$('#lockCriteriaTable').on( 'click', function () {
+					if ( $( this ).text() == "Lock" ) {
+						if ( $('#lockAlternativesTable').text() == "Lock" ) { 
+							alert("No puede bloquear! Antes debe bloquear las alternativas.");
+						}
+						else {
+							$(this).text("Unlock");
+							$('#modalCriteriaBtn').prop("disabled", true);
+							$('#removeCriteria').prop("disabled", true);
+							$('#clearCriteria').prop("disabled", true);
+							initialize();
+						}
+					} else {
+						$(this).text("Lock");
+						$('#modalCriteriaBtn').prop("disabled", false);
+						$('#removeCriteria').prop("disabled", false);
+						$('#clearCriteria').prop("disabled", false);
+						finalize();
+					}
+				});
+
+				/**
+				 * Alternatives Functionality
+				 */
+				
+				$('#lockAlternativesTable').prop("disabled", true);
+
+				var alternativesTable = $('#alternativesTable').DataTable({
+					// Select Extension Enable
+					select: {
+						style: 'os',
+						sort: false,
+						className: 'selected',
+						blurable: true
+					},
+					searching: false
+				});
+
+				$('#addAlternative').on( 'click', function () {
+					var id = next(alternatives);
+					var name = $('#alternativeName').val();
+					var desc = $('#alternativeDescription').val();
+
+					alternativesTable.row.add( [
+							id,
+							name,
+							desc
+						] ).draw( false );
+
+					$('#lockAlternativesTable').prop("disabled", false);
+					
+					alternatives.push( new Alternative(id,name,desc) );
+				} );
+
+				$('#removeAlternative').on( 'click', function () {
+					var elem = alternativesTable.rows("[class*='selected']").data().toArray()[0];
+					alternatives.splice( alternatives.indexOf( getElementWithId( elem[0], alternatives ) ), 1 );
+					alternativesTable.rows("[class*='selected']").remove().draw( false );
+
+					if (alternativesTable.rows().count() == 0)
+						$('#lockAlternativesTable').prop("disabled", true);
+				} );
+
+				$('#clearAlternatives').on( 'click', function () {
+					alternativesTable.clear().draw();
+					$('#lockAlternativesTable').prop("disabled", true);
+					alternatives = [];
+				});
+
+				$('#lockAlternativesTable').on( 'click', function () {
+					if ( $( this ).text() == "Lock" ) {
+						$(this).text("Unlock");
+						$('#modalAlternativesBtn').prop("disabled", true);
+						$('#removeAlternative').prop("disabled", true);
+						$('#clearAlternatives').prop("disabled", true);
+						$('#modalCriteriaBtn').prop("disabled", false);//@todo cambiar por $('#modalCriteriaBtn').click()
+						//create();
+					} else {
+						if ( $('#lockCriteriaTable').text() == "Unlock" ) { 
+							alert("No puede desbloquear! Antes debe desbloquear los criterios.");
+						}
+						else {
+							$(this).text("Lock");
+							$('#modalAlternativesBtn').prop("disabled", false);
+							$('#removeAlternative').prop("disabled", false);
+							$('#clearAlternatives').prop("disabled", false);
+							$('#modalCriteriaBtn').prop("disabled", true);
+							//destroy();
+						}
+					}
+					
+				});
+
+				/**
+				 * Criteria Judgments
+				 */
+
+				var criPaCoTable;// = $('#criPaCoTable').DataTable();
+				var criPaCoCols = [{ "title": "Critery" }];
+				var criPaCoData = [];
+
+				/**
+				 * Add an element in the 2D specific table as a column and row entry but without content.
+				 */
+				function addCriteriaToProcessTable( aCritery, index ) {
+					console.log("Adding Criteria To Process Table...");
+					// add new column (new critery)
+					criPaCoCols.push( { "title": aCritery.name } );
+					// add new row (new critery)
+					var row = new Array( criPaCoCols.length-1 );
+					// The first element is the name
+					row[0] = aCritery.name;
+					
+					if (criPaCoCols.length > 2)
+						row.fill( CELL_CONTENT_DEFAULT, 1, criPaCoCols.length );
+
+					criPaCoData.push( row );
+
+					// Add new column 
+					for ( index in criPaCoData ) {
+						criPaCoData[ index ].push( CELL_CONTENT_DEFAULT );
+					}
+
+					if ( aCritery.subCriteria.length > 0 ) {
+						addSubcriteriaPairwiseComparosonsMatrix( aCritery, index );
+					}
+				}
+
+				/**
+				 * Destroy the specific table.
+				 */
+				function destroyCriteriaPairwiseComparisonsMatrix() {
+					console.log("Deleting Criteria Pairwise Comparisons Matrix...");
+					criPaCoTable.destroy();
+					$('#criPaCoTable').empty();
+
+					$('#criPVector').DataTable().destroy();
+					$('#criPVector').empty();
+					
+					criPaCoCols = [{ "title": "Critery" }];
+					criPaCoData = [];
+				}
+
+				/**
+				 * Creates the specific table.
+				 */
+				function createCriteriaPairwiseComparisonsMatrix() {
+					criPaCoTable = create('criPaCoTable',criPaCoCols,criPaCoData);
+					completeTheDiagonal(criPaCoTable);
+
+					// Create a table of criteria priority vector
+					lastVector = create('criPVector',[{ "title": "Priority Vector" }]);
+
+					$('#criPaCoTable').on('click', 'td', function () {
+						lastTable = $('#criPaCoTable').DataTable();
+						lastIdx = lastTable.cell( this ).index();
+						lastVector = $('#criPVector').DataTable();
+						enterValues( this );
+					});
+
+					var n = new Node( 'criPaCoTable', 'criPVector' );
+					n.type = TYPE_ONE;
+					info.push( n );
+				}
+
+				function addSubcriteriaPairwiseComparosonsMatrix( aCritery, index ) {
+					console.log("Adding Table for subcriteria of the " + aCritery.name);
+					var columns = [{ "title": "Subcritery" }];
+					for ( idx in aCritery.subCriteria ) {
+						columns.push( { "title": aCritery.subCriteria[idx] } );
+					}
+
+					var rows = [];
+					for (idx in aCritery.subCriteria) {
+						// add new row
+						var row = new Array( columns.length );
+						row[0] = aCritery.subCriteria[idx];
+						row.fill(CELL_CONTENT_DEFAULT,1,columns.length);
+						rows.push(row);
+					}
+
+					var t = "subCriteryComparisonTable-" + index;
+					var v = "subCriteryVector-" + index;
+					appendTables( aCritery.name,t,v,"process-tab" );
+
+					var table = create(t,columns,rows);
+					completeTheDiagonal( table );
+
+					var vector = create(v,[{ "title": "Priority Vector" }]);
+
+					$( '#' + t ).on('click', 'td', function() { 
+						lastTable = table;
+						lastIdx = lastTable.cell( this ).index();
+						lastVector = vector;
+						enterValues();
+					});
+
+					var n = new Node( t, v );
+					n.type = TYPE_TWO;
+					n.criteryId = aCritery.id;
+					info.push( n );
+				}
+
+				/**
+				 * Alternatives judgments
+				 */
+
+				var altPaCoCols = [{ "title": "Alternative" }];
+
+				/**
+				 * Crea la tabla de comparación entre alternativas según el criterio dado
+				 */
+				function addCriteriaTableBtwnAlternatives (critery, subCIdx, index) {
+					
+					if ( subCIdx == null )
+						console.log("Adding Critery Table for " + critery.name);
+					else
+						console.log("Adding SubCritery Table for " + critery.subCriteria[subCIdx]);
+
+					var columns = [{ "title": "Alternative" }];
+					for (idx in alternatives) {
+						columns.push( { "title": alternatives[idx].name } );
+					}
+
+					var rows = [];
+					for ( idx in alternatives ) {
+						// add new row
+						var row = new Array( columns.length );
+						row[0] = alternatives[ idx ].name;
+						row.fill( CELL_CONTENT_DEFAULT, 1, columns.length );
+						rows.push( row );
+					}
+
+					var t = "comparisonTable-" + index;
+					var v = "vector-" + index;
+					var title = subCIdx != null ? critery.name + " " + critery.subCriteria[subCIdx] : critery.name;
+					appendTables( title, t, v, "altPriorities-tab" );
+
+					var table = create( t, columns, rows );
+					completeTheDiagonal( table );
+
+					var vector = create( v, [{ "title": "Priority Vector" }] );
+
+					$( '#' + t ).on('click', 'td', function() {
+						lastTable = table;
+						lastIdx = lastTable.cell( this ).index();
+						lastVector = vector;
+						enterValues();
+					});
+
+					var n = new Node( t, v );
+					if ( subCIdx == null ) {
+						n.type = TYPE_THREE;
+						n.criteryId = critery.id;
+					}
+					else {
+						n.type = TYPE_FOUR;
+						n.criteryId = critery.id;
+						n.subCriteryId = subCIdx;
+					}
+					info.push( n );
+				}
+
+				function destroyAlternativeTable () {
+					var tables = $("table[id^='comparisonTable-'], table[id^='vector-']").each( function () {
+						var id = this.id;
+						$( '#'+id ).DataTable().destroy();
+					} );
+				}
+
+
+				/**
+				 * @param {string} title - 
+				 * @param {DataTable.API} idT - Comparision pairwise table
+				 * @param {DataTable.API} idV - Vector of priorities
+				 * @param {string} tab - 
+				 */
+				function appendTables (title, idT, idV, tab){
+					/**
+					<div class="row">
+						<h3>Title</h3>
+						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+							<!-- Pairwise Comparison Table -->
+							<table id="idT" class="table table-hover"></table>
+						</div>
+						<div class="">
+							<!-- Vector -->
+							<table id="idV" class="table table-hover"></table>
+						</div>
+					</div>
+	 				*/
+	 				var row = $('<div></div>').attr("class", "row tables");
+	 				var col = $('<div></div>').attr("class", CLASS_COLUMN8);
+	 				var table = $('<table></table>').attr("id",idT);
+	 				
+	 				col.append( table );
+	 				row.append( col );
+	 				col = $('<div></div>').attr("class", CLASS_COLUMN4);
+	 				var table = $('<table></table>').attr("id",idV);
+	 				col.append( table );
+	 				row.append( col );
+	 				row.prepend( '<p>'+title+'</p>');
+
+					$('#'+ tab +' .container-fluid .row:nth-child(2) .panel .panel-body').append( row );
+				}
+
+				/**
+				 * General Functions
+				 */
+				function initialize() {
+					appendTables("Criteria Pairwise Comparisons Matrix",
+							"criPaCoTable",
+							"criPVector",
+							"process-tab");
+
+					for ( index in criteria ) {
+						if ( criteria[ index ].subCriteria.length != 0 ) {
+							var subC = criteria[ index ].subCriteria;
+							for ( index2 in subC ) {
+								addCriteriaTableBtwnAlternatives( criteria[index], index2, index + "-" + index2 );
+							}
+						}
+						else { 
+							// Add a table for each critery
+							addCriteriaTableBtwnAlternatives( criteria[index], null, index );
+						}
+						addCriteriaToProcessTable( criteria[index], index );
+					}
+					createCriteriaPairwiseComparisonsMatrix();
+				}
+
+				function finalize() {
+					destroyCriteriaPairwiseComparisonsMatrix();
+					destroyAlternativeTable();
+					$("div.row.tables").has("table[id^='criPaCoTable']").detach();
+					$("div.row.tables").has("table[id^='comparisonTable-']").detach();
+
+					info = [];
+				}
+
+				/**
+				 * @param {string} id - table id
+				 * @param {array} cols - columns to set
+				 * @param {array} dataset - 2d array, rows of the table
+				 */
+				function create (id,cols,dataset) {
+					var ds = dataset || [];
+					return $( '#' + id ).DataTable( {
+						searching: false,
+						sort: false,
+						paging: false,
+						data: ds,
+						columns: cols,
+						destroy: true
+					} );
+				}
+
+				$('#loadJudgment').on('click', function() {
+					//var input = criPaCoTable.cell( this ).data();console.log(input);
+					var input = eval($( '#judgment' ).val());
+					var reverse = eval(1 / input);
+					
+					// Set the input value
+					lastTable.cell(function ( idx, data, node ) {
+							return (idx.row == lastIdx.row &&
+									idx.column ==  lastIdx.column)
+								? true : false;
+						}
+					).data( input.toFixed(4) );
+
+					// Set reverse input value
+					lastTable.cell(function ( idx, data, node ) {
+							return (idx.row == lastIdx.column - 1 &&
+									idx.column ==  lastIdx.row + 1)
+								? true : false;
+						}
+					).data( reverse.toFixed(4) );
+
+					// if all the values has been entered
+					if (done(lastTable)) {
+						console.log('Done.');
+						matrixData = lastTable.columns(function ( idx ) { 
+												return idx > 0 ? true : false; 
+											} )
+											.data().toArray() ;
+						var vectorData = calculatePriorityVector(matrixData);
+						//@todo almacenar vectors[ sub/critery.id ] = vectorData;
+
+						console.log("Priority vector founded: " + vectorData);
+
+						// Show vector
+						lastVector.clear();
+						var dataSet = transpose( [ vectorData ] );
+						dataSet.forEach( function (item,index,arr) {
+									lastVector.row.add( item );
+								}
+						);
+						lastVector.draw();
+
+						// Check Consistency of the judgments table
+						if ( ! checkConsistency(matrixData, vectorData) ) {
+							console.log("Fail! The Consistency Ratio is major than 10%.");
+							$('#consistencyFail').delay(200).fadeIn().delay(4000).fadeOut();
+						}
+						else {
+							console.log("Success! The Consistency Ratio is less than 10%.");
+							$('#consistencyOk').delay(200).fadeIn().delay(4000).fadeOut();
+						}
+					} else {
+						console.log('Not Done Yet.');
+					}
+				} );
+
+				function enterValues(domTable) {
+					if (lastIdx.row == lastIdx.column - 1)
+						return;
+					$('#judgmentsPopup').modal();
+				}
+
+				/**
+				 * Complete the diagonal of the received DataTable with 1.
+				 * @param {DataTable.API} 
+				 */
+				function completeTheDiagonal(table) {
+					var selected = table.cells( function ( idx, data, node ) {
+							return idx.row == idx.column - 1 ? true : false;
+						} ).every(function() { 
+							this.data(1);
+						});
+				}
+
+				/**
+				 * Return true if the table doesn't contain a cell with CELL_CONTENT_DEFAULT value.
+				 * @param {DataTable.API} table - The table to check
+				 * @return {bool} 
+				 */
+				function done(table) {
+					var test = true;
+					table.cells( function ( idx, data, node ) {
+							if (data == CELL_CONTENT_DEFAULT || data == "")
+								test &= false;
+							} );
+					return test;
+				}
+
+				/**
+				 * Returns the priority vector of the param received.
+				 * @param {array} matrix - 2D array (matrix[columns][rows])
+				 */
+				function calculatePriorityVector ( matrix ) {
+					var stdMatrix;
+
+					// Calculating Standard matrix
+					stdMatrix = getStandardMatrix( matrix );
+
+					var tM = transpose( stdMatrix );
+
+					var vector = [];
+					for ( index in tM ) {
+						var row = tM[ index ];
+						vector.push( average(row) );
+					}
+					return vector;
+				}
+
+				/**
+				 * Multiply two matrix
+				 *
+				 */
+				function multiplyMatrix(A, B) {
+					var R = [];
+					for (var i = 0; i < A.length; i++) {
+						R[i] = [];
+						for (var j=0; j< B[0].length; j++) {
+							sum = 0;
+							for (var k=0; k< B.length; k++) {
+								sum += A[i][k] * B[k][j];
+							}
+						R[i][j] = sum;
+				        }
+					}
+					return R;
+				}
+
+				/**
+				 * Returns the transpose matrix of the param received.
+				 * @param {array} matrix - 2d array (matrix[columns][rows])
+				 * @return {array} 2d array
+				 */
+				function transpose ( m ) {
+					var t = [];
+					for (c in m) {
+						for (r in m[c]) {
+							if ( ! Array.isArray( t[r] ) )
+								t[r] = [];
+							t[r][c] = m[c][r];
+						}
+					}
+					return t;
+				}
+
+				/**
+				 * Returns the average of an array.
+				 * @param {array} matrix 
+				 * @return {float}
+				 */
+				function average ( anArray ) {
+					return anArray.reduce(	function (total, num, idx, arr) {
+						var aux;
+						aux = total + num;
+						if (idx == arr.length -1)
+						    aux = aux / arr.length;
+						return aux;
+						}, 0);
+				}
+
+				/**
+				 * Returns the summation vector of the columns of the param received.
+				 * @param {array} matrix - 2D array (matrix[columns][rows])
+				 */
+				function sumOfColumns ( matrix ) {
+					var vector = [];
+					for (c in matrix) {
+						vector[c] = matrix[c].reduce( function (a,b) {
+										return Number(a) + Number(b);
+									}, 0 );
+					}
+					return vector;
+				}
+
+				/**
+				 * Returns the normalized matrix of the param received.
+				 * @param {array} matrix - 2d array (matrix[columns][rows])
+				 */
+				function getStandardMatrix ( matrix ) {
+					var stdM = [];
+					// Calculating sum of columns
+					var sumVector = sumOfColumns( matrix );
+
+					for (c in matrix) {
+						if ( ! Array.isArray( stdM[ c ] ) ) 
+								stdM[ c ] = [];
+						for (r in matrix[c]) {
+							stdM[c][r] =  matrix[c][r] / sumVector[c];
+						}
+					}
+					return stdM;
+				}
+
+				/**
+				 * Returns true if the Consistency Ratio is less than 10%.
+				 * @param {array} matrix - 2d array (matrix[columns][rows])
+				 * @return {bool}
+				 */
+				function checkConsistency (matrix, pVector) {
+					var lambdaMax = 0;
+					var sumVector = sumOfColumns(matrix);
+
+					for (idx in pVector) {
+						lambdaMax += pVector[idx] * sumVector[idx];
+					}
+					var n = pVector.length;
+					var ci = ( lambdaMax - n ) / ( n - 1 );
+					var ri = rndIdx( n );
+					var cr = ci / ri;
+					return cr < 0.1;
+				}
+				
+				/**
+				 * Returns the next available id number
+				 * @param {array} arr - Array of Critery objects
+				 */
+				function next (arr) {
+					var i = -1;
+					for (e in arr) {
+						if (arr[e].id > i)
+							i = arr[e].id;
+					}
+					return i+1;
+				}
+
+				/**
+				 * Retorna el (1er) elemento con el id del paramtro
+				 * @param {integer} id
+				 * @param {array} arr - Array of Critery/Alternative objects
+				 */
+				function getElementWithId( id, arr ) {
+					for (e in arr)
+						if (arr[e].id == id)
+							return arr[e];
+					return null;
+				}
+
+				/**
+				 * Returns the Random Index for 'n' dimension.
+				 * @param {integer} n - Dimension of the analyzed table
+				 */
+				function rndIdx (n) {
+					switch(n) {
+						case 1: return	0.000; break;
+						case 2: return	0.000; break;
+						case 3: return	0.525; break;
+						case 4: return	0.882; break;
+						case 5: return	1.115; break;
+						case 6: return	1.252; break;
+						case 7: return	1.341; break;
+						case 8: return	1.404; break;
+						case 9: return	1.452; break;
+						case 10: return	1.484; break;
+						case 11: return	1.513; break;
+						case 12: return	1.535; break;
+						case 13: return	1.555; break;
+						case 14: return	1.570; break;
+						case 15: return	1.583; break;
+						case 16: return	1.595; break;
+						default: return -1; break;
+ 					}
+ 				}
+			} );
+ 		</script>
+	</body>
+</html>
