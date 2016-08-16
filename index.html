@@ -33,6 +33,11 @@
 			.highlight {
 				background-color: #5CB85C !important; 
 			}
+
+			#consistencyFail, #consistencyOk {
+				position: fixed;
+				top: 15px;
+			}
 		</style>
 		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.12/r-2.1.0/se-1.2.0/datatables.min.css"/>
 		<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/r-2.1.0/se-1.2.0/datatables.min.js"></script>
@@ -122,8 +127,10 @@
  							<p>Recomendaciones: </p>
  							<ol>
  								<li>No utilizar demasiadas alternativas y criterios.</li>
- 								<li></li>
  							</ol>
+ 						</div>
+ 						<div>
+ 							<input type="file" id="file" name="file" />
  						</div>
  					</div>
  				</div>
@@ -133,7 +140,7 @@
  					<div class="form-group">
  						<label for="input" class="col-sm-2 control-label">Objetivo: </label>
  						<div class="col-sm-10">
- 							<input type="text" name="goal" id="inputGoal" class="form-control" value="some goal you propose..." required="required" pattern="" title="Goal">
+ 							<input type="text" name="goal" id="inputGoal" class="form-control" value="El objetivo que te propongas..." required="required" pattern="" title="Goal">
  						</div>
  					</div>
  					<button type="button" class="btn btn-lg btn-success" id="calculate">Calcular</button>
@@ -171,6 +178,7 @@
 			 								<th>Id</th>
 			 								<th>Nombre</th>
 			 								<th>Descripción</th>
+			 								<th>Es cuantitativo</th>	
 			 							</tr>
 			 						</thead>
 			 						<tbody>
@@ -336,6 +344,15 @@
 		 							<input type="text" name="criteriaDescription" id="criteriaDescription" class="form-control" value="Criteria Description" required="required" pattern="" title="Criteria Description">
 		 						</div>
 		 					</div>
+		 					<div class="row show-grid">
+		 						<div class="col-sm-12 checkbox">
+		 							<label>
+		 								<input type="checkbox" id="criteriaQuantitative" required="required" pattern="" title="Quantitative Criteria">
+		 								Es Cuantitativo
+		 							</label>
+		 						</div>
+		 						
+		 					</div>
 	 					</div>
 	 				</div>
  					<div class="modal-footer">
@@ -374,6 +391,29 @@
  					<div class="modal-footer">
  						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
  						<button type="button" id="addAlternative" class="btn btn-succes" data-dismiss="modal">Agregar</button>
+ 					</div>
+ 				</div>
+ 			</div>
+ 		</div>
+
+ 		<!-- Modal Numeric -->
+ 		<div class="modal fade" id="numericPopup">
+ 			<div class="modal-dialog">
+ 				<div class="modal-content">
+ 					<div class="modal-header">
+ 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+ 						<h4 class="modal-title">Insert numeric value</h4>
+ 					</div>
+ 					<div class="modal-body">
+ 						<div class="container-fluid">
+	 						<div class="row show-grid">
+ 								<input type="number" name="" id="value" class="form-control" required="required" title="Value">
+ 							</div>
+ 						</div>
+ 					</div>
+ 					<div class="modal-footer">
+ 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+ 						<button type="button" class="btn btn-primary" data-dismiss="modal" id="loadValue">Aceptar</button>
  					</div>
  				</div>
  			</div>
@@ -466,11 +506,12 @@
 		<script>
  			$(document).ready(function() {
 
- 				function Critery(i,n,d) {
+ 				function Critery(i,n,d, q) {
  					this.id = i;
  					this.name = n;
  					this.description = d;
  					this.subCriteria = [];
+ 					this.quantitative = q || false;
 
  					this.addSubCritery = function (sc) {
  						this.subCriteria.push( sc );
@@ -509,6 +550,8 @@
  				const TYPE_THREE = 3;
  				const TYPE_FOUR = 4;
 
+				const LOCK = "Bloquear";
+				const UNLOCK = "Desbloquear";
 				const CELL_CONTENT_DEFAULT = 'Click para editar!';
 				const CLASS_COLUMN8 = "col-xs-8 col-sm-8 col-md-8 col-lg-8";
 	 			const CLASS_COLUMN4 = "col-xs-4 col-sm-4 col-md-4 col-lg-4";
@@ -521,6 +564,7 @@
 				var lastIdx;
 				var lastTable;
 				var lastVector;
+				var lastQuantitative;
 
 				// Hide alert divs (we show it later, when we need it)
 				$('#consistencyFail').hide();
@@ -620,8 +664,7 @@
 				});
 
 				/**
-				 *
-				 *
+				 * Process result matrix to seach the priority vector
 				 */
 				$('#calculate').on('click', function () {
 					var mtx = [];
@@ -682,7 +725,6 @@
 					pVector = multiplyMatrix( mtx, critV );
 
 					var max = 0;
-					var indexes = [];
 					var dataset = [];
 
 					for (idx in pVector) {
@@ -693,20 +735,18 @@
 						dataset.push( row );
 
 						if (pVector[ idx ][0] >= max) {
-							max = pVector[ idx ][0];
-							indexes.push( Number(idx) );
+							max = Number( pVector[ idx ][0] );
 						}
 					}
-					console.log(indexes);
+
 					var columns = [
 							{ "title": "Alternativa" },
 							{ "title": "Descripción" },
 							{ "title": "Prioridad (%)" }
 						];
 					create("resultTable", columns, dataset);
-					// colorear NO ANDA!!
 					var nodes = $('#resultTable').DataTable().rows( function (idx, data, node) {
-							return $.inArray(idx, indexes) != -1;
+							return Number((max * 100).toFixed(2)) ==  Number(data[2]);
 						}).nodes()
 						.to$() 
 						.addClass( 'highlight' );
@@ -727,21 +767,34 @@
 						className: 'selected',
 						blurable: true
 					},
-					searching: false
+					searching: false,
+					paging: false
 				});
 
 				$('#addCriteria').on( 'click', function () {
 					var id = next( criteria );
 					var name = $('#criteriaName').val();
 					var desc = $('#criteriaDescription').val();
+					var quant = $('#criteriaQuantitative').is(":checked");
+
+					var c = new Critery(id, name, desc, quant);
+					addCriteria( c );
+				} );
+
+				/**
+				 * @param c : Critery
+				 */
+				function addCriteria( c ) {
+					console.log("Adding critery "+c.name);
 					criteriaTable.row.add( [
-							id,
-							name,
-							desc
+							c.id,
+							c.name,
+							c.description,
+							c.quantitative
 						] ).draw( false );
 					$('#lockCriteriaTable').prop("disabled", false);
-					criteria.push( new Critery(id, name, desc) );
-				} );
+					criteria.push( c );
+				}
 
 				$('#removeCriteria').on( 'click', function () {
 					var elem = criteriaTable.rows("[class*='selected']").data().toArray()[0];
@@ -759,25 +812,30 @@
 				});
 
 				$('#lockCriteriaTable').on( 'click', function () {
-					if ( $( this ).text() == "Lock" ) {
-						if ( $('#lockAlternativesTable').text() == "Lock" ) { 
+					lockCriteriaTable();
+				});
+
+				function lockCriteriaTable () {
+					var btn = $('#lockCriteriaTable');
+					if ( $( btn ).text() == LOCK ) {
+						if ( $('#lockAlternativesTable').text() == LOCK ) { 
 							alert("No se puede bloquear! Antes debe bloquear las alternativas.");
 						}
 						else {
-							$(this).text("Unlock");
+							$( btn ).text(UNLOCK);
 							$('#modalCriteriaBtn').prop("disabled", true);
 							$('#removeCriteria').prop("disabled", true);
 							$('#clearCriteria').prop("disabled", true);
 							initialize();
 						}
 					} else {
-						$(this).text("Lock");
+						$( btn ).text(LOCK);
 						$('#modalCriteriaBtn').prop("disabled", false);
 						$('#removeCriteria').prop("disabled", false);
 						$('#clearCriteria').prop("disabled", false);
 						finalize();
 					}
-				});
+				}
 
 				/**
 				 * Alternatives Functionality
@@ -793,7 +851,8 @@
 						className: 'selected',
 						blurable: true
 					},
-					searching: false
+					searching: false,
+					paging: false
 				});
 
 				$('#addAlternative').on( 'click', function () {
@@ -801,16 +860,23 @@
 					var name = $('#alternativeName').val();
 					var desc = $('#alternativeDescription').val();
 
+					var alt = new Alternative(id,name,desc);
+					addAlternative( alt );
+				} );
+
+				/**
+				 * @param a : Alternative
+				 */
+				function addAlternative( a ) {
 					alternativesTable.row.add( [
-							id,
-							name,
-							desc
+							a.id,
+							a.name,
+							a.description
 						] ).draw( false );
 
 					$('#lockAlternativesTable').prop("disabled", false);
-					
-					alternatives.push( new Alternative(id,name,desc) );
-				} );
+					alternatives.push( a );
+				}
 
 				$('#removeAlternative').on( 'click', function () {
 					var elem = alternativesTable.rows("[class*='selected']").data().toArray()[0];
@@ -828,28 +894,30 @@
 				});
 
 				$('#lockAlternativesTable').on( 'click', function () {
-					if ( $( this ).text() == "Lock" ) {
-						$(this).text("Unlock");
+					lockAlternativesTable();
+				});
+
+				function lockAlternativesTable () {
+					var btn = $('#lockAlternativesTable');
+					if ( $( btn ).text() == LOCK ) {
+						$( btn ).text(UNLOCK);
 						$('#modalAlternativesBtn').prop("disabled", true);
 						$('#removeAlternative').prop("disabled", true);
 						$('#clearAlternatives').prop("disabled", true);
-						$('#modalCriteriaBtn').prop("disabled", false);//@todo cambiar por $('#modalCriteriaBtn').click()
-						//create();
+						$('#modalCriteriaBtn').prop("disabled", false);
 					} else {
-						if ( $('#lockCriteriaTable').text() == "Unlock" ) { 
+						if ( $('#lockCriteriaTable').text() == UNLOCK ) { 
 							alert("No puede desbloquear! Antes debe desbloquear los criterios.");
 						}
 						else {
-							$(this).text("Lock");
+							$( btn ).text(LOCK);
 							$('#modalAlternativesBtn').prop("disabled", false);
 							$('#removeAlternative').prop("disabled", false);
 							$('#clearAlternatives').prop("disabled", false);
 							$('#modalCriteriaBtn').prop("disabled", true);
-							//destroy();
 						}
 					}
-					
-				});
+				}
 
 				/**
 				 * Criteria Judgments
@@ -915,7 +983,7 @@
 						lastTable = $('#criPaCoTable').DataTable();
 						lastIdx = lastTable.cell( this ).index();
 						lastVector = $('#criPVector').DataTable();
-						enterValues( this );
+						enterSaatyValue( this );
 					});
 
 					var n = new Node( 'criPaCoTable', 'criPVector' );
@@ -952,7 +1020,7 @@
 						lastTable = table;
 						lastIdx = lastTable.cell( this ).index();
 						lastVector = vector;
-						enterValues();
+						enterSaatyValue();
 					});
 
 					var n = new Node( t, v );
@@ -975,36 +1043,59 @@
 					else
 						console.log("Adding SubCritery Table for " + critery.subCriteria[subCIdx]);
 
-					var columns = [{ "title": "Alternativa" }];
-					for (idx in alternatives) {
-						columns.push( { "title": alternatives[idx].name } );
-					}
-
-					var rows = [];
-					for ( idx in alternatives ) {
-						// add new row
-						var row = new Array( columns.length );
-						row[0] = alternatives[ idx ].name;
-						row.fill( CELL_CONTENT_DEFAULT, 1, columns.length );
-						rows.push( row );
-					}
-
 					var t = "comparisonTable-" + index;
 					var v = "vector-" + index;
 					var title = subCIdx != null ? critery.name + " " + critery.subCriteria[subCIdx] : critery.name;
 					appendTables( title, t, v, "altPriorities-tab" );
 
-					var table = create( t, columns, rows );
-					completeTheDiagonal( table );
+					var vector = null;
 
-					var vector = create( v, [{ "title": "Vector Prioridad" }] );
+					var columns = [{ "title": "Alternativa" }];
+					if ( critery.quantitative ) {
+						columns.push( { "title": "Valor" } );
+						var rows = [];
+						for ( idx in alternatives ) {
+							// add new row
+							rows.push( [ alternatives[ idx ].name, CELL_CONTENT_DEFAULT ] );
+						}
 
-					$( '#' + t ).on('click', 'td', function() {
-						lastTable = table;
-						lastIdx = lastTable.cell( this ).index();
-						lastVector = vector;
-						enterValues();
-					});
+						var table = create( t, columns, rows );
+						vector = create( v, [{ "title": "Vector Prioridad" }] );
+
+						$( '#' + t ).on('click', 'td', function() {
+							lastTable = table;
+							lastIdx = lastTable.cell( this ).index();
+							lastVector = vector;
+							lastQuantitative = critery.quantitative;
+							enterValue();
+						});
+					}
+					else {
+						for (idx in alternatives) {
+							columns.push( { "title": alternatives[idx].name } );
+						}
+
+						var rows = [];
+						for ( idx in alternatives ) {
+							// add new row
+							var row = new Array( columns.length );
+							row[0] = alternatives[ idx ].name;
+							row.fill( CELL_CONTENT_DEFAULT, 1, columns.length );
+							rows.push( row );
+						}
+
+						var table = create( t, columns, rows );
+						completeTheDiagonal( table );
+						vector = create( v, [{ "title": "Vector Prioridad" }] );
+
+						$( '#' + t ).on('click', 'td', function() {
+							lastTable = table;
+							lastIdx = lastTable.cell( this ).index();
+							lastVector = vector;
+							lastQuantitative = critery.quantitative;
+							enterSaatyValue();
+						});
+					}
 
 					var n = new Node( t, v );
 					if ( subCIdx == null ) {
@@ -1113,8 +1204,40 @@
 					} );
 				}
 
+				$('#loadValue').on('click', function() {
+					var input = eval($( '#value' ).val());
+					// Set the input value
+					lastTable.cell(function ( idx, data, node ) {
+							return (idx.row == lastIdx.row &&
+									idx.column ==  lastIdx.column)
+								? true : false;
+						}
+					).data( input );
+
+					// if all the values has been entered
+					if ( done( lastTable ) ) {
+						console.log('Done.');
+						matrixData = lastTable.columns(function ( idx ) { 
+												return idx > 0 ? true : false; 
+											} )
+											.data().toArray() ;
+						var vectorData = normalize( matrixData );
+						console.log("Priority vector founded: " + vectorData);
+
+						// Show vector
+						lastVector.clear();
+						var dataSet = transpose( [ vectorData ] );
+						dataSet.forEach( function (item,index,arr) {
+									lastVector.row.add( item );
+								}
+						);
+						lastVector.draw();
+					} else {
+						console.log('Not Done Yet.');
+					}
+				} );
+
 				$('#loadJudgment').on('click', function() {
-					//var input = criPaCoTable.cell( this ).data();console.log(input);
 					var input = eval($( '#judgment' ).val());
 					var reverse = eval(1 / input);
 					
@@ -1135,15 +1258,13 @@
 					).data( reverse.toFixed(4) );
 
 					// if all the values has been entered
-					if (done(lastTable)) {
+					if ( done( lastTable ) ) {
 						console.log('Done.');
 						matrixData = lastTable.columns(function ( idx ) { 
 												return idx > 0 ? true : false; 
 											} )
 											.data().toArray() ;
-						var vectorData = calculatePriorityVector(matrixData);
-						//@todo almacenar vectors[ sub/critery.id ] = vectorData;
-
+						var vectorData = calculatePriorityVector( matrixData );
 						console.log("Priority vector founded: " + vectorData);
 
 						// Show vector
@@ -1169,10 +1290,14 @@
 					}
 				} );
 
-				function enterValues(domTable) {
+				function enterSaatyValue(domTable) {
 					if (lastIdx.row == lastIdx.column - 1)
 						return;
 					$('#judgmentsPopup').modal();
+				}
+
+				function enterValue() {
+					$('#numericPopup').modal();
 				}
 
 				/**
@@ -1195,10 +1320,31 @@
 				function done(table) {
 					var test = true;
 					table.cells( function ( idx, data, node ) {
-							if (data == CELL_CONTENT_DEFAULT || data == "")
+							if (data == CELL_CONTENT_DEFAULT)
 								test &= false;
 							} );
 					return test;
+				}
+
+				/**
+				 *
+				 *
+				 */
+				function normalize ( matrix ) {
+					console.log(matrix);
+					if ( matrix[0].length > 1 )
+						console.log("Probablemente necesites calcular el Vector Prioridad en lugar de normalizar,");
+					
+					matrix = transpose( matrix );
+					var sum = 0;
+					for ( idx in matrix ) {
+						sum += matrix[idx][0];
+					}
+					var vector = [];
+					for ( idx in matrix ) {
+						vector.push( matrix[idx][0] / sum );
+					}
+					return vector;
 				}
 
 				/**
@@ -1374,6 +1520,65 @@
 						default: return 1.6; break;
  					}
  				}
+
+ 				$('#file').on( 'change', function ( evt ) {
+ 					$( '#file' ).prop("disabled", true);
+ 					var file = evt.target.files[0];
+ 					console.log( "load File " + file.name);
+					var reader = new FileReader();
+
+					reader.onload = function( e ) {
+						console.log( "Reading File "+file.name);
+						var text = reader.result;
+						loadJSON( text );
+					}
+					// Read in the image file as a data URL.
+					reader.readAsText(file);
+				} );
+
+				function setGoal( goal ) {
+					$("#inputGoal").val( goal );
+				}
+
+ 				function loadJSON ( json ) {
+ 					console.log( "Load Json File");
+ 					var info = JSON.parse( json );
+ 					console.log( info );
+ 					var goal = info.goal; // String
+ 					var alternatives = info.alternatives; // Array
+ 					var criteria = info.criteria; // Array
+
+ 					setGoal( goal );
+
+ 					for ( idx  in alternatives ) {
+ 						var i = alternatives[idx].id;
+ 						var n = alternatives[idx].name;
+ 						var d = alternatives[idx].description;
+
+ 						var a = new Alternative( i,n,d );
+ 						addAlternative( a );
+ 					}
+ 					lockAlternativesTable();
+
+ 					for ( idx  in criteria ) {
+ 						var i = criteria[idx].id;
+ 						var n = criteria[idx].name;
+ 						var d = criteria[idx].description;
+ 						var q = criteria[idx].quantitative;
+
+ 						var c = new Critery( i,n,d,q );
+ 						var sc = criteria[idx].subcriteria;
+ 						for (i in sc) {
+ 							c.addSubCritery( sc[i] );
+ 						}
+ 						addCriteria( c );
+ 					}
+ 					lockCriteriaTable();
+ 					/**
+ 					setTimeout(null, 200);
+ 					*/
+ 				}
+
 			} );
  		</script>
 	</body>

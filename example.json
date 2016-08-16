@@ -1,0 +1,17 @@
+{
+	"goal" : "Learn how this tool runs",
+
+	"alternatives" : [
+		{ "id" : 0,	"name" : "Alternative 1", "description" :	"Brief description for this alternative" },
+		{ "id" : 1, "name" : "Alternative 2", "description" : 	"Brief description for this alternative" },
+		{ "id" : 2, "name" : "Alternative 3", "description" : 	"Brief description for this alternative" },
+		{ "id" : 3, "name" : "Alternative 4", "description" : 	"Brief description for this alternative" }
+	],
+
+	"criteria" : [
+		{ "id" : 0, "name" : "Critery 1", "description" : "Brief description for this critery", "quantitative" : true, "subcriteria" : [ "Subcritery 1-1", "Subcritery 1-2" ] },
+		{ "id" : 1, "name" : "Critery 2", "description" : "Brief description for this critery", "quantitative" : true, "subcriteria" : [] },
+		{ "id" : 2, "name" : "Critery 3", "description" : "Brief description for this critery", "quantitative" : false, "subcriteria" : [ "Subcritery 3-1", "Subcritery 3-2", "Subcritery 3-3" ] },
+		{ "id" : 3, "name" : "Critery 4", "description" : "Brief description for this critery", "quantitative" : false, "subcriteria" : [] }
+	]
+}

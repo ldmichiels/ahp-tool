@@ -1,0 +1,14 @@
+{
+	"goal" : "Learn how this tool runs",
+
+	"alternatives" : [
+		{ "id" : 0,	"name" : "Alternative 1", "description" :	"Brief description for this alternative" },
+		{ "id" : 1, "name" : "Alternative 2", "description" : 	"Brief description for this alternative" },
+		{ "id" : 2, "name" : "Alternative 3", "description" : 	"Brief description for this alternative" }
+	],
+
+	"criteria" : [
+		{ "id" : 0, "name" : "Critery 1", "description" : "Brief description for this critery", "quantitative" : true, "subcriteria" : [ "Subcritery 1-1", "Subcritery 1-2" ] },
+		{ "id" : 1, "name" : "Critery 2", "description" : "Brief description for this critery", "quantitative" : true, "subcriteria" : [] }
+	]
+}
